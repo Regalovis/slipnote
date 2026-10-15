@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  输入框底：浅灰圆角块，无描边。
+  参考稿里的输入控件都是"色块"而不是"框线"。
+-->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="@color/surface_muted" />
+    <corners android:radius="14dp" />
+</shape>

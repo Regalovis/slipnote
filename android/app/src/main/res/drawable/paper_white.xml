@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  白纸。
+
+  刻意**不加描边**：参考稿里几乎看不到边框，
+  层次完全靠留白和极淡的阴影拉开。
+  1px 灰边会让界面显得"表格化"，是廉价感的主要来源之一。
+-->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="#FFFFFF" />
+    <corners android:radius="18dp" />
+</shape>

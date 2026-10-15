@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  纸条详情：把纸条放在纯白空间里，周围留足呼吸感。
+
+  参考 Fuse 的 "Recovery Key" 页：内容集中在中下部，
+  上方大片留白，底部是悬空的操作区。
+  这里把纸条本身当作主角，界面元素全部退到边缘。
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/screen_bg"
+    android:orientation="vertical"
+    android:paddingStart="24dp"
+    android:paddingEnd="24dp"
+    android:paddingTop="28dp">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:clipToPadding="false"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:id="@+id/paper"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/card_shadow"
+            android:orientation="vertical"
+            android:padding="22dp">
+
+            <TextView
+                android:id="@+id/text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lineSpacingMultiplier="1.45"
+                android:textColor="@color/ink_on_paper"
+                android:textSize="20sp" />
+
+            <!--
+              纸条渲染视图：手写底图 + 贴纸。
+
+              用自定义 View 而不是 ImageView，因为贴纸是可点击的独立元素，
+              ImageView 只能显示一张合成图，点不出"哪张贴纸"。
+            -->
+            <com.notedrop.demo.ui.NoteRenderView
+                android:id="@+id/doodle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:contentDescription="@null" />
+
+            <!-- 有贴纸时的提示 -->
+            <TextView
+                android:id="@+id/tvStickerHint"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/sticker_tap_hint"
+                android:textColor="@color/hint_on_paper"
+                android:textSize="11sp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/meta"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="end"
+                android:textColor="@color/hint_on_paper"
+                android:textSize="12sp" />
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- 底部操作：删除弱化、收藏是主操作 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_delete"
+            style="@style/Widget.Material3.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="52dp"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:text="@string/action_delete"
+            android:textColor="@color/ink_secondary"
+            android:textSize="14sp" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_fav"
+            style="@style/PrimaryAction"
+            android:layout_width="wrap_content"
+            android:layout_height="52dp"
+            android:minWidth="140dp"
+            android:text="@string/action_favorite" />
+    </LinearLayout>
+</LinearLayout>

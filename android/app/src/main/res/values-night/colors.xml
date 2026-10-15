@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  深色模式。
+
+  对应参考稿里 Fuse 的深色页：底色近黑、卡片略亮，
+  靠明度差分层而不是描边。
+
+  纸条本身保持白色不动 —— 深色模式把纸也变黑，
+  "一张纸条"这个隐喻就失效了。纸在夜里也是纸。
+-->
+<resources>
+
+    <!-- 夜里的底色带一点紫调，和全息头图同族；不是纯黑 -->
+    <color name="desk">#111018</color>
+    <color name="screen_bg">@color/desk</color>
+
+    <!-- 夜里的纸：不是纯白，略暗一点，避免在暗环境里刺眼 -->
+    <color name="paper_white_fill">#E8E6E1</color>
+
+    <!-- 深色下暖光要更淡，否则会发脏 -->
+    <color name="warm_glow">#2A2418</color>
+
+    <color name="ink_on_paper">#12151C</color>
+    <color name="ink_secondary">#9BA1B0</color>
+    <color name="hint_on_paper">#666C7A</color>
+
+    <color name="paper_ink">#EDEEF2</color>
+    <color name="paper_ink_light">#9BA1B0</color>
+
+    <!-- 旧名别名，值统一到极光紫（见 values/colors.xml 的说明） -->
+    <color name="brand">@color/aurora</color>
+    <color name="brand_pressed">@color/aurora_pressed</color>
+    <color name="brand_soft">@color/aurora_soft</color>
+
+    <color name="divider">#262A33</color>
+    <color name="surface_muted">#1A1E26</color>
+    <color name="paper_edge_color">#262A33</color>
+
+    <color name="danger">#E06C5F</color>
+
+    <!-- ===== 极光（Aurora）===== -->
+
+    <!-- 夜里主色提亮一档，压在深底上才不发闷 -->
+    <color name="aurora">#A695FF</color>
+    <color name="aurora_pressed">#8B7BF0</color>
+    <color name="aurora_soft">#1E1B2E</color>
+
+    <!-- 夜里的卡片：比页面底色亮一档，靠明度差分出来 -->
+    <color name="sheet">#14161C</color>
+
+    <!--
+      夜里的头图文字。
+
+      头图是全息淡彩，夜里也是浅色的（箔纸不会因为关灯变黑），
+      所以文字仍然是深色 —— 和浅色模式一样。
+    -->
+    <color name="hero_ink">#2A2440</color>
+    <color name="hero_ink_soft">#7A7291</color>
+
+    <color name="on_aurora">@color/hero_ink</color>
+    <color name="on_aurora_soft">@color/hero_ink_soft</color>
+
+</resources>

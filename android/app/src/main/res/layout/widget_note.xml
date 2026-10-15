@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  小部件布局。
+
+  结构：涂鸦占满剩余空间（weight=1），文字和落款按内容高度贴在下方。
+  这样安排的原因是涂鸦的形状不可预测，必须让它拿到弹性空间，
+  用 FIT_CENTER 等比缩放到可用区域内 —— 横画进竖格子时上下留白，
+  但不会被裁切变形，也不会挤掉文字。
+
+  文字-only 的纸条：涂鸦隐藏后不占空间，文字自然落到顶部。
+
+  注意：RemoteViews 只支持白名单控件，不能用自定义 View；
+  尺寸档位和排版在 NoteWidgetProvider 里按实际格子尺寸动态决定。
+-->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/widget_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="8dp">
+
+    <FrameLayout
+        android:id="@+id/paper"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/paper_white"
+        android:padding="12dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <!-- 涂鸦：弹性占用剩余空间 -->
+            <ImageView
+                android:id="@+id/widget_doodle"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:contentDescription="@null"
+                android:scaleType="fitCenter"
+                android:visibility="gone" />
+
+            <!-- 文字：按内容高度，最多 4 行 -->
+            <TextView
+                android:id="@+id/widget_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:includeFontPadding="false"
+                android:lineSpacingMultiplier="1.15"
+                android:maxLines="4"
+                android:text="@string/preview_note"
+                android:textColor="@color/ink_on_paper"
+                android:textSize="16sp" />
+
+            <LinearLayout
+                android:id="@+id/widget_footer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/widget_sender"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:includeFontPadding="false"
+                    android:maxLines="1"
+                    android:text="@string/default_sender"
+                    android:textColor="@color/hint_on_paper"
+                    android:textSize="11sp" />
+
+                <TextView
+                    android:id="@+id/widget_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:maxLines="1"
+                    android:textColor="@color/hint_on_paper"
+                    android:textSize="11sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </FrameLayout>
+</FrameLayout>

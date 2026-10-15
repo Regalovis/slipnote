@@ -1,0 +1,26 @@
+{
+  "name": "notedrop-server",
+  "version": "0.1.0",
+  "private": true,
+  "description": "小纸条服务端：配对、纸条中转、WebSocket 实时推送",
+  "main": "src/index.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "express": "^4.21.1",
+    "ws": "^8.18.0"
+  },
+  "optionalDependencies": {
+    "better-sqlite3": "^11.10.0"
+  },
+  "comment": "better-sqlite3 仅作为老版本 Node 的兜底；Node >= 22.5 会优先使用内置 node:sqlite，不需要任何原生编译。",
+  "devDependencies": {
+    "puppeteer-core": "^25.13.0"
+  }
+}

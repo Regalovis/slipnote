@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 小胶囊标签底（参考 Luma 的 "Going" / "Waitlisted" 状态标） -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="@color/brand_soft" />
+    <corners android:radius="999dp" />
+</shape>

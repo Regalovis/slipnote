@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  桌面暖光。
+
+  ## 为什么需要这一层
+
+  参考稿（Fuse 的渐变块、Luma 的光晕）都有一个**大面积色域**，
+  这是整屏最容易被记住的东西。我上一版全屏一片纯白，
+  所以看起来"什么设计都没有" —— 不是因为哪里做错了，
+  而是因为**什么都没做**。
+
+  这里用径向渐变做一团柔和暖光，纸条落在光里。
+  取色来自 App 图标的米黄，和"午后传递的折叠纸条"这个意象呼应。
+
+  径向渐变中心偏上、范围很大、边缘很淡，
+  这样不会让人一眼看出"这里有个圆"，只是一片自然的光。
+-->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <gradient
+        android:type="radial"
+        android:centerX="0.35"
+        android:centerY="0.12"
+        android:gradientRadius="110%p"
+        android:startColor="@color/warm_glow"
+        android:centerColor="#80FFF0D8"
+        android:endColor="#00FFF0D8" />
+</shape>

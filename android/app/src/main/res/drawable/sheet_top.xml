@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  底部白色卡片（圆角上盖）。
+
+  只圆上面两个角：底部一直延伸出屏幕，圆角在屏幕上根本看不见，
+  但写上去会让卡片和屏幕底部之间出现一道缝。
+
+  圆角 26dp —— 参考稿的卡片圆角都偏大，视觉上更柔和，
+  也正好和头图那条波浪的曲率对上。
+-->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="@color/sheet" />
+    <corners
+        android:topLeftRadius="26dp"
+        android:topRightRadius="26dp" />
+</shape>

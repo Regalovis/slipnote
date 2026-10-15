@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>小纸条</title>
+  <meta name="theme-color" content="#FFF8DC">
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+
+<!-- 顶部状态条 -->
+<header class="topbar">
+  <div class="brand">小纸条</div>
+  <div class="conn" id="conn">
+    <span class="dot" id="dot"></span>
+    <span id="connText">未连接</span>
+  </div>
+</header>
+
+<!-- 未注册时的引导 -->
+<section class="card onboard" id="onboard">
+  <h1>在桌面上留一张纸条</h1>
+  <p class="muted">先给自己起个名字，然后和对方用同一个数字配对。</p>
+  <input id="nickname" class="input" placeholder="你的昵称" maxlength="24" autocomplete="nickname">
+  <button class="btn primary" id="btnRegister">开始使用</button>
+</section>
+
+<!-- 主界面 -->
+<main id="app" hidden>
+
+  <!-- 配对区 -->
+  <section class="card">
+    <div class="card-head">
+      <h2>配对</h2>
+      <span class="muted small" id="myName"></span>
+    </div>
+
+    <div class="pair-row">
+      <input id="code" class="input code" inputmode="numeric" maxlength="6" placeholder="6 位数字">
+      <button class="btn" id="btnCreate">生成</button>
+      <button class="btn primary" id="btnJoin">配对</button>
+    </div>
+    <p class="hint" id="pairHint">
+      生成一个码发给对方；或双方约定同一个数字，各自点一次「生成」再互相配对。
+    </p>
+
+    <div class="peers" id="peers"></div>
+  </section>
+
+  <!-- 写纸条 -->
+  <section class="card">
+    <div class="card-head">
+      <h2>写一张</h2>
+      <span class="muted small" id="toWhom"></span>
+    </div>
+
+    <!-- 纸张样式 -->
+    <div class="paper-row">
+      <span class="muted small">纸张</span>
+      <div class="seg" id="paperPicker">
+        <button class="seg-btn active" data-paper="white">白纸</button>
+        <button class="seg-btn" data-paper="grid">方格</button>
+        <button class="seg-btn" data-paper="cream">米黄</button>
+      </div>
+      <button class="btn ghost" id="btnOrientation">竖版</button>
+    </div>
+
+    <div class="paper paper-white" id="paper">
+      <textarea id="text" class="paper-text" placeholder="写点什么…" rows="3"></textarea>
+      <canvas id="pad" class="pad"></canvas>
+    </div>
+
+    <!-- 绘制工具：两行，保证发送键始终可见 -->
+    <div class="tools">
+      <div class="seg" id="toolPicker">
+        <button class="seg-btn active" data-tool="pen">笔</button>
+        <button class="seg-btn" data-tool="eraser">橡皮</button>
+      </div>
+      <button class="btn ghost" id="btnWidth">粗细：中</button>
+      <div class="swatches" id="swatches"></div>
+    </div>
+
+    <div class="tools actions">
+      <button class="btn ghost" id="btnUndo">撤销</button>
+      <button class="btn ghost" id="btnClear">清空</button>
+      <span class="spacer"></span>
+      <button class="btn primary" id="btnSend">发送</button>
+    </div>
+  </section>
+
+  <!-- 收到的纸条 -->
+  <section class="card">
+    <div class="card-head">
+      <h2>最近收到</h2>
+      <span class="muted small" id="lastTime"></span>
+    </div>
+    <div class="paper note" id="inbox">
+      <p class="empty">还没有收到纸条</p>
+    </div>
+    <div class="tools actions">
+      <span class="spacer"></span>
+      <button class="btn" id="btnFav">收藏这张</button>
+    </div>
+  </section>
+
+  <!-- 收藏夹 -->
+  <section class="card">
+    <div class="card-head">
+      <h2>收藏夹</h2>
+      <span class="muted small" id="favCount"></span>
+    </div>
+    <div id="favList"></div>
+  </section>
+
+  <footer class="foot">
+    <button class="link" id="btnLogout">重置本机身份</button>
+  </footer>
+</main>
+
+<div class="toast" id="toast" hidden></div>
+
+<script src="./app.js"></script>
+</body>
+</html>

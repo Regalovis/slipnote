@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  品牌图标块。
+
+  参考 Luma / Fuse：每个界面的视觉主角旁边都有一个**彩色圆角方块**，
+  这是打破"全是灰文字"的关键 —— 纯文字界面无论怎么排版都像系统设置页。
+
+  用渐变而不是纯色，是因为参考稿的色块都有轻微的光影过渡，
+  纯色块看起来更廉价。
+-->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <!-- 用图标里的深蓝，和 App 图标、强调色是同一族 -->
+    <gradient
+        android:angle="315"
+        android:startColor="#3D5580"
+        android:endColor="#2A3B59" />
+    <corners android:radius="14dp" />
+</shape>

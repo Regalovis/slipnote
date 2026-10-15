@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  连接设置。
+
+  版面参考参考稿的表单处理：
+    大标题
+    区块标题（小号、次级色）
+    输入控件是浅灰色块，不是描边框
+    操作按钮成对并排，主操作填色
+    列表项之间用发丝线，不加卡片边框
+-->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/screen_bg"
+    android:clipToPadding="false"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp"
+        android:paddingTop="28dp"
+        android:paddingBottom="32dp">
+
+        <TextView
+            style="@style/PageTitle"
+            android:text="@string/settings_title" />
+
+        <!-- 身份状态 -->
+        <TextView
+            android:id="@+id/tv_identity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/input_bg"
+            android:lineSpacingMultiplier="1.4"
+            android:padding="16dp"
+            android:textColor="@color/ink_on_paper"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/tv_conn_status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/ink_secondary"
+            android:textSize="13sp" />
+
+        <!-- ===== 服务器 ===== -->
+        <TextView
+            style="@style/SectionLabel"
+            android:text="@string/label_server" />
+
+        <EditText
+            android:id="@+id/et_server"
+            style="@style/FieldInput"
+            android:hint="@string/hint_server"
+            android:importantForAutofill="no"
+            android:inputType="textUri" />
+
+        <EditText
+            android:id="@+id/et_nickname"
+            style="@style/FieldInput"
+            android:layout_marginTop="10dp"
+            android:hint="@string/hint_nickname"
+            android:importantForAutofill="no"
+            android:inputType="textPersonName"
+            android:maxLength="24" />
+
+        <!-- ===== 账号 ===== -->
+        <TextView
+            style="@style/SectionLabel"
+            android:text="@string/label_account" />
+
+        <EditText
+            android:id="@+id/etUsername"
+            style="@style/FieldInput"
+            android:hint="@string/hint_username"
+            android:importantForAutofill="no"
+            android:inputType="text"
+            android:maxLength="20" />
+
+        <EditText
+            android:id="@+id/etPassword"
+            style="@style/FieldInput"
+            android:layout_marginTop="10dp"
+            android:hint="@string/hint_password"
+            android:importantForAutofill="no"
+            android:inputType="textPassword" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_login"
+                style="@style/QuietAction"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:text="@string/action_login" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_register"
+                style="@style/PrimaryAction"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="10dp"
+                android:layout_weight="1"
+                android:text="@string/action_register"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <!-- 已登录时显示，用于改昵称 -->
+        <LinearLayout
+            android:id="@+id/row_nickname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <EditText
+                android:id="@+id/etNewNickname"
+                style="@style/FieldInput"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:hint="@string/hint_new_nickname"
+                android:importantForAutofill="no"
+                android:inputType="textPersonName"
+                android:maxLength="24" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_change_nickname"
+                style="@style/QuietAction"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:layout_marginStart="10dp"
+                android:text="@string/action_change_nickname" />
+        </LinearLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_save_server"
+            style="@style/QuietAction"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="12dp"
+            android:text="@string/action_save_server" />
+
+        <!-- ===== 配对 ===== -->
+        <TextView
+            style="@style/SectionLabel"
+            android:text="@string/label_pair" />
+
+        <EditText
+            android:id="@+id/etCode"
+            style="@style/FieldInput"
+            android:hint="@string/hint_code"
+            android:importantForAutofill="no"
+            android:inputType="number"
+            android:letterSpacing="0.15"
+            android:maxLength="6" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_create_code"
+                style="@style/QuietAction"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:text="@string/action_create_code" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_join_code"
+                style="@style/PrimaryAction"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="10dp"
+                android:layout_weight="1"
+                android:text="@string/action_join_code"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:lineSpacingMultiplier="1.45"
+            android:text="@string/pair_tip"
+            android:textColor="@color/hint_on_paper"
+            android:textSize="12sp" />
+
+        <!-- ===== 同伴 ===== -->
+        <TextView
+            style="@style/SectionLabel"
+            android:text="@string/label_peers" />
+
+        <LinearLayout
+            android:id="@+id/peer_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+
+        <!-- ===== 群组 ===== -->
+        <TextView
+            style="@style/SectionLabel"
+            android:text="@string/label_groups" />
+
+        <EditText
+            android:id="@+id/etGroupName"
+            style="@style/FieldInput"
+            android:hint="@string/hint_group_name"
+            android:importantForAutofill="no"
+            android:inputType="text"
+            android:maxLength="24" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_create_group"
+                style="@style/QuietAction"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:text="@string/action_create_group" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_join_group"
+                style="@style/QuietAction"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="10dp"
+                android:layout_weight="1"
+                android:text="@string/action_join_group" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:lineSpacingMultiplier="1.45"
+            android:text="@string/group_tip"
+            android:textColor="@color/hint_on_paper"
+            android:textSize="12sp" />
+
+        <LinearLayout
+            android:id="@+id/group_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:orientation="vertical" />
+
+    </LinearLayout>
+</ScrollView>

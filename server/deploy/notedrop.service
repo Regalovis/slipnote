@@ -1,0 +1,29 @@
+[Unit]
+Description=NoteDrop server (node, 127.0.0.1:8090)
+Documentation=file:///srv/notedrop/README.md
+After=network.target
+
+[Service]
+Type=simple
+User=sysadmin
+Group=sysadmin
+WorkingDirectory=/srv/notedrop
+Environment=NODE_ENV=production
+Environment=PORT=8090
+Environment=HOST=127.0.0.1
+Environment=DATA_DIR=/srv/notedrop/data
+ExecStart=/usr/bin/node src/index.js
+Restart=always
+RestartSec=3
+
+# 只绑定回环地址，外部访问必须经过 nginx 反代
+PrivateTmp=true
+NoNewPrivileges=true
+
+# 日志进 journald
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=notedrop
+
+[Install]
+WantedBy=multi-user.target

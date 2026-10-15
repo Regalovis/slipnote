@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  全息头图（Holographic / Iridescent）。
+
+  ## 从"极光"改到"全息"，差在哪
+
+  上一版是**极光**：暗紫底 + 高饱和光晕。那是夜空的逻辑 ——
+  底色越暗，光越亮。结果整块头图很沉，用户的原话是
+  "有点太紫了，整体看起来很暗"。
+
+  全息箔纸是**反过来的**：底是接近白的浅色，颜色是**淡彩**，
+  靠明度而不是饱和度取胜。像一张镭射纸在灯下 —— 亮、薄、会流动。
+
+  所以这一版：
+    底色 = #F3F1FF（几乎白的浅紫）
+    光晕 = 六种淡彩，透明度 0.55~0.85（不是 0.9+ 的实色）
+    顺序 = 紫 → 粉 → 青 → 薄荷 → 蜜桃 → 蓝，交错铺开
+
+  最后叠一层**斜向白光**，这是全息材质最关键的一笔 ——
+  真实的全息纸总有一条随角度扫过的亮带，没有它只是一块淡彩。
+-->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- 底色：几乎白的浅紫 -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#F3F1FF" />
+        </shape>
+    </item>
+
+    <!-- 1) 左上：淡紫 -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:type="radial"
+                android:centerX="0.16"
+                android:centerY="0.14"
+                android:gradientRadius="58%p"
+                android:startColor="#D9C6B8FF"
+                android:endColor="#00C6B8FF" />
+        </shape>
+    </item>
+
+    <!-- 2) 右上：淡粉 -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:type="radial"
+                android:centerX="0.88"
+                android:centerY="0.10"
+                android:gradientRadius="62%p"
+                android:startColor="#D0FFB6D9"
+                android:endColor="#00FFB6D9" />
+        </shape>
+    </item>
+
+    <!-- 3) 中右：淡青。全息里唯一的冷色高光，负责"亮" -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:type="radial"
+                android:centerX="0.72"
+                android:centerY="0.54"
+                android:gradientRadius="60%p"
+                android:startColor="#C4A9E8F5"
+                android:endColor="#00A9E8F5" />
+        </shape>
+    </item>
+
+    <!-- 4) 左下：薄荷 -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:type="radial"
+                android:centerX="0.08"
+                android:centerY="0.78"
+                android:gradientRadius="56%p"
+                android:startColor="#B8B0F0D8"
+                android:endColor="#00B0F0D8" />
+        </shape>
+    </item>
+
+    <!-- 5) 中部：淡蜜桃。暖色只出现这一处，避免整体偏黄 -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:type="radial"
+                android:centerX="0.42"
+                android:centerY="0.36"
+                android:gradientRadius="48%p"
+                android:startColor="#A8FFD3B0"
+                android:endColor="#00FFD3B0" />
+        </shape>
+    </item>
+
+    <!-- 6) 右下：淡蓝 -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:type="radial"
+                android:centerX="0.94"
+                android:centerY="0.82"
+                android:gradientRadius="58%p"
+                android:startColor="#BEB8CCFF"
+                android:endColor="#00B8CCFF" />
+        </shape>
+    </item>
+
+    <!--
+      7) 斜向亮带 —— 全息的关键一笔。
+
+      从左上到右下扫过一条白光。没有它，上面六层只是一堆淡彩；
+      有了它才有"箔纸反光"的质感。
+      两端压到全透明，避免出现生硬的边界。
+    -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:type="linear"
+                android:angle="135"
+                android:startColor="#00FFFFFF"
+                android:centerColor="#66FFFFFF"
+                android:endColor="#00FFFFFF" />
+        </shape>
+    </item>
+</layer-list>

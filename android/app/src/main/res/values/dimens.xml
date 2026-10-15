@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  设计刻度。
+
+  ## 为什么需要这个文件
+
+  之前所有间距都是随手写的 —— 22dp、18dp、26dp、14dp，
+  看起来每个数值都有道理，但放在一起就是乱的。
+  参考稿之所以"看起来是一个档次的"，很大程度是因为
+  它所有间距都来自**同一套刻度**，节奏是统一的。
+
+  ## 刻度规则
+
+  间距用 4 的倍数，主刻度取 8 的倍数：
+      4   极紧（图标与文字之间）
+      8   紧
+     12   常规
+     16   常规偏松
+     24   区块之间
+     32   大区块之间
+     48   页面级留白
+
+  字号用 1.25 倍率递进（音乐里的"音阶"）：
+     12 → 15 → 19 → 24 → 30 → 38
+  相邻两级之间有明显落差，但又不是随意的数字。
+
+  圆角只保留三档：
+      12dp  小组件（缩略图、输入框）
+      20dp  卡片
+     999dp  胶囊（按钮、标签）
+-->
+<resources>
+
+    <!-- ===== 间距 ===== -->
+
+    <dimen name="space_1">4dp</dimen>
+    <dimen name="space_2">8dp</dimen>
+    <dimen name="space_3">12dp</dimen>
+    <dimen name="space_4">16dp</dimen>
+    <dimen name="space_5">24dp</dimen>
+    <dimen name="space_6">32dp</dimen>
+    <dimen name="space_7">48dp</dimen>
+
+    <!-- 页面左右边距。统一用这个值，不要各页不同 -->
+    <dimen name="page_margin">20dp</dimen>
+    <!-- 页面顶部留白（状态栏之下） -->
+    <dimen name="page_top">16dp</dimen>
+
+    <!-- ===== 圆角 ===== -->
+
+    <dimen name="radius_sm">12dp</dimen>
+    <dimen name="radius_card">20dp</dimen>
+    <dimen name="radius_pill">999dp</dimen>
+
+    <!-- ===== 字号（1.25 倍率）===== -->
+
+    <dimen name="text_caption">12sp</dimen>
+    <dimen name="text_body">15sp</dimen>
+    <dimen name="text_title">19sp</dimen>
+    <dimen name="text_heading">24sp</dimen>
+    <dimen name="text_display">30sp</dimen>
+    <dimen name="text_hero">38sp</dimen>
+
+    <!-- ===== 控件尺寸 ===== -->
+
+    <!-- 主要按钮高度 -->
+    <dimen name="button_height">54dp</dimen>
+    <!-- 次要按钮/工具按钮 -->
+    <dimen name="button_height_sm">44dp</dimen>
+    <!-- 列表行最小高度（保证点击热区） -->
+    <dimen name="row_min_height">56dp</dimen>
+    <!-- 列表缩略图 -->
+    <dimen name="thumb_w">74dp</dimen>
+    <dimen name="thumb_h">94dp</dimen>
+    <!-- 品牌色块 -->
+    <dimen name="brand_tile">42dp</dimen>
+    <!-- 图标 -->
+    <dimen name="icon_sm">18dp</dimen>
+    <dimen name="icon_md">22dp</dimen>
+
+</resources>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  自适应图标。
+
+  前景是「午后传递的折叠纸条」插画，生成时已缩放到安全区内
+  （自适应图标只有中央 66/108 保证不被遮罩裁切）。
+  背景用插画自身的深蓝纸张色，而不是白色 ——
+  白底在深色主题下会显得刺眼，深蓝还能和暖黄的纸条形成对比。
+-->
+<adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
+    <background android:drawable="@drawable/ic_launcher_background" />
+    <foreground android:drawable="@drawable/ic_launcher_foreground" />
+    <!--
+      主题图标用的单色层。
+
+      这里**不能**复用彩色的前景插画：Android 13+ 会把 monochrome
+      图层强制单色化，一张彩色插画被压成灰块后效果很差。
+      改用已有的纯色纸条矢量图，单色化后轮廓依然清晰。
+    -->
+    <monochrome android:drawable="@drawable/ic_mono_launcher" />
+</adaptive-icon>

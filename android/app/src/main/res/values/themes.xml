@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  全局主题。
+
+  在这里统一定义颜色，Material 组件（按钮、输入框、开关…）
+  会自动取用，不用逐个控件写颜色。
+  这也是之前界面"颜色杂"的原因之一：大量颜色写死在单个布局里，
+  改一处漏一处。集中到主题后，整体调色只需要动这一个文件。
+-->
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <style name="Theme.NoteDrop" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- 主色：克制使用，只出现在主按钮、选中态 -->
+        <item name="colorPrimary">@color/aurora</item>
+        <item name="colorOnPrimary">#FFFFFF</item>
+        <item name="colorPrimaryContainer">@color/aurora_soft</item>
+        <item name="colorOnPrimaryContainer">@color/aurora</item>
+
+        <!-- 次色也用中性色，避免界面出现第二种彩色 -->
+        <item name="colorSecondary">@color/ink_secondary</item>
+        <item name="colorOnSecondary">@color/screen_bg</item>
+
+        <!-- 表面与背景全白，层次靠阴影 -->
+        <item name="android:colorBackground">@color/screen_bg</item>
+        <item name="colorSurface">@color/screen_bg</item>
+        <item name="colorOnSurface">@color/ink_on_paper</item>
+        <item name="colorSurfaceVariant">@color/surface_muted</item>
+        <item name="colorOnSurfaceVariant">@color/ink_secondary</item>
+
+        <!-- 描边色极淡 -->
+        <item name="colorOutline">@color/divider</item>
+        <item name="colorOutlineVariant">@color/divider</item>
+
+        <item name="colorError">@color/danger</item>
+
+        <!-- 状态栏与内容同色，营造通栏的干净感 -->
+        <item name="android:statusBarColor" tools:targetApi="l">@android:color/transparent</item>
+        <item name="android:navigationBarColor" tools:targetApi="l">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
+
+        <!-- 去掉 Material3 默认的色调叠加，白就是白 -->
+        <item name="elevationOverlayEnabled">false</item>
+    </style>
+
+    <!-- 区块小标题：小号、次级色、全大写感 -->
+    <style name="SectionLabel">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">28dp</item>
+        <item name="android:layout_marginBottom">10dp</item>
+        <item name="android:textColor">@color/ink_secondary</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:letterSpacing">0.02</item>
+    </style>
+
+    <!-- 页面主标题 -->
+    <style name="PageTitle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/ink_on_paper</item>
+        <item name="android:textSize">34sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:letterSpacing">-0.02</item>
+    </style>
+
+    <!--
+      卡片里的主标题。
+
+      参考 Fuse 的 "Spend" / "Recovery Key"：字号很大、字重很重。
+      这是整个界面唯一需要"喊出来"的文字，其余都退成辅助。
+    -->
+    <style name="CardTitle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/ink_on_paper</item>
+        <item name="android:textSize">22sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:letterSpacing">-0.01</item>
+        <item name="android:lineSpacingMultiplier">1.25</item>
+    </style>
+
+    <!-- 卡片副文：小、灰、行距松 -->
+    <style name="CardCaption">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/ink_secondary</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:lineSpacingMultiplier">1.4</item>
+    </style>
+
+    <!--
+      输入框。
+
+      用极淡的灰底而不是描边 —— 参考稿里输入控件都是"色块"而非"框线"。
+      无描边 + 浅灰底在小屏上更清爽，也不会和数据卡片抢注意力。
+    -->
+    <style name="FieldInput">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/input_bg</item>
+        <item name="android:padding">16dp</item>
+        <item name="android:textColor">@color/ink_on_paper</item>
+        <item name="android:textColorHint">@color/hint_on_paper</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+
+    <!-- 主操作按钮：唯一大面积使用强调色的地方 -->
+    <style name="PrimaryAction" parent="Widget.Material3.Button">
+        <item name="backgroundTint">@color/aurora</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textSize">16sp</item>
+        <item name="cornerRadius">26dp</item>
+        <item name="android:minHeight">52dp</item>
+    </style>
+
+    <!-- 次级操作按钮：描边极淡或无边框 -->
+    <style name="QuietAction" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="android:textColor">@color/ink_on_paper</item>
+        <item name="strokeColor">@color/divider</item>
+        <item name="cornerRadius">14dp</item>
+    </style>
+
+    <!--
+      编辑页工具栏里的按钮。
+
+      全部去掉默认的外框和背景色 —— 工具按钮是"图标 + 文字"，
+      不是卡片。Material 默认的描边按钮六个排在一起会形成一堵墙，
+      把画布压得喘不过气（这正是之前用户抱怨"按钮占比太大"的来源）。
+    -->
+    <style name="ToolButton" parent="Widget.Material3.Button.TextButton">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">44dp</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:minWidth">0dp</item>
+        <item name="android:paddingStart">12dp</item>
+        <item name="android:paddingEnd">12dp</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/ink_on_paper</item>
+        <item name="iconTint">@color/ink_on_paper</item>
+        <item name="iconGravity">textStart</item>
+        <item name="iconPadding">6dp</item>
+        <item name="iconSize">18dp</item>
+        <item name="backgroundTint">@android:color/transparent</item>
+    </style>
+
+    <!--
+      编辑页顶部那行工具（返回 / 写一张 / 视角）。
+
+      刻意做得很轻：这一行的职责只是"告诉你在哪、能去哪"，
+      不该和画布抢地方。用户的原话是"把最重要的屏幕资源给画板"。
+    -->
+    <style name="TopBarButton" parent="Widget.Material3.Button.TextButton">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:minWidth">0dp</item>
+        <item name="android:paddingStart">10dp</item>
+        <item name="android:paddingEnd">10dp</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:textColor">@color/ink_secondary</item>
+        <item name="iconTint">@color/ink_secondary</item>
+        <item name="iconSize">18dp</item>
+        <item name="backgroundTint">@android:color/transparent</item>
+    </style>
+
+</resources>

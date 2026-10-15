@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Demo 阶段允许明文 HTTP，方便你用局域网 IP 直接联调。
+  正式发布前应把服务器换成 HTTPS，并删掉 cleartextTrafficPermitted。
+-->
+<network-security-config>
+    <base-config cleartextTrafficPermitted="true" />
+</network-security-config>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 小部件选择器里的预览图（先用矢量图占位，后续可替换为真实截图 PNG） -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#FFF8DC" />
+            <corners android:radius="24dp" />
+            <stroke android:width="2dp" android:color="#E8D9A8" />
+        </shape>
+    </item>
+    <item android:gravity="top|left" android:top="26dp" android:left="26dp" android:right="90dp">
+        <shape android:shape="rectangle">
+            <solid android:color="#C8892F" />
+            <size android:height="6dp" />
+            <corners android:radius="4dp" />
+        </shape>
+    </item>
+    <item android:gravity="top|left" android:top="46dp" android:left="26dp" android:right="60dp">
+        <shape android:shape="rectangle">
+            <solid android:color="#D8C9A8" />
+            <size android:height="6dp" />
+            <corners android:radius="4dp" />
+        </shape>
+    </item>
+</layer-list>

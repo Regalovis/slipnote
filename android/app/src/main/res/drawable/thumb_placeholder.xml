@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  列表行左侧的缩略图占位。
+
+  参考 Luma 的列表：每行左边是一个圆角方形图块，右边是文字块。
+  没有图片时用这个浅灰块占位，保持行高与节奏一致 ——
+  空白和缺图会让列表看起来"断了一截"。
+-->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="@color/surface_muted" />
+    <corners android:radius="12dp" />
+</shape>

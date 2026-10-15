@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  极光头图（Aurora / Mesh Gradient）。
+
+  ## 做法
+
+  多层大半径径向渐变叠在一起。单层径向渐变会看出明显的圆形边界，
+  多层错位叠加后边界互相融合，就成了"极光"那种流动感 ——
+  这是 CSS 版原型里同一条思路的直接移植。
+
+  ## 色序
+
+  紫(270°) → 品红(310°) → 粉(340°) → 蓝(220°) → 青(185°)，
+  这是真实极光照片里最常见的顺序：冷暖交替出现，中间用亮青做高光。
+  随机撒色会变成霓虹灯，有方向的色序才像极光。
+
+  每层都降了饱和并压暗，最后一层用暗紫收底 ——
+  这样白色的漂浮纸条才压得住背景。
+
+  ## 为什么不用 XML 的 <gradient> 直接画
+
+  就是画不了"多个径向渐变互相融合"。layer-list 逐层叠加是等价写法：
+  每层中心不透明、边缘全透明，叠完自然过渡。
+-->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- 底色：暗紫。所有光晕都叠在它上面 -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#3A2C6B" />
+        </shape>
+    </item>
+
+    <!-- 1) 左上：紫 -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:type="radial"
+                android:centerX="0.18"
+                android:centerY="0.12"
+                android:gradientRadius="52%p"
+                android:startColor="#EB9278F2"
+                android:endColor="#009278F2" />
+        </shape>
+    </item>
+
+    <!-- 2) 右上：深紫 -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:type="radial"
+                android:centerX="0.86"
+                android:centerY="0.08"
+                android:gradientRadius="60%p"
+                android:startColor="#E07A60DC"
+                android:endColor="#007A60DC" />
+        </shape>
+    </item>
+
+    <!-- 3) 中右：品红 -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:type="radial"
+                android:centerX="0.68"
+                android:centerY="0.56"
+                android:gradientRadius="64%p"
+                android:startColor="#CCC478D4"
+                android:endColor="#00C478D4" />
+        </shape>
+    </item>
+
+    <!-- 4) 左下：蓝 -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:type="radial"
+                android:centerX="0.10"
+                android:centerY="0.74"
+                android:gradientRadius="56%p"
+                android:startColor="#D1788CEC"
+                android:endColor="#00788CEC" />
+        </shape>
+    </item>
+
+    <!-- 5) 中部：亮青高光。整个渐变里唯一的冷亮色，负责"提神" -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:type="radial"
+                android:centerX="0.44"
+                android:centerY="0.34"
+                android:gradientRadius="46%p"
+                android:startColor="#9EA8E2EC"
+                android:endColor="#00A8E2EC" />
+        </shape>
+    </item>
+
+    <!-- 6) 右下：青蓝 -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:type="radial"
+                android:centerX="0.94"
+                android:centerY="0.80"
+                android:gradientRadius="60%p"
+                android:startColor="#B360B0DC"
+                android:endColor="#0060B0DC" />
+        </shape>
+    </item>
+
+    <!-- 7) 收底：暗紫中心光，把四周的亮色压回来 -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:type="radial"
+                android:centerX="0.50"
+                android:centerY="0.50"
+                android:gradientRadius="78%p"
+                android:startColor="#8C463684"
+                android:endColor="#00463684" />
+        </shape>
+    </item>
+</layer-list>

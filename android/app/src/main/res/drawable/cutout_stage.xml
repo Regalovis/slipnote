@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  抠图页的图片容器。
+
+  比页面底色再深一点点 + 大圆角，让图片区从整页里"凹"下去。
+  透明棋盘格会画在这块上面（在 CutoutView 里），
+  所以这里只要一个安静的容器，不要抢。
+-->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="#EFEDF6" />
+    <corners android:radius="18dp" />
+</shape>

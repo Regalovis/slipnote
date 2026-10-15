@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  抽屉把手上的那根小横条。
+
+  收起时整个抽屉只剩这一根 4dp 高的圆角条 —— 它是唯一的
+  "这里能往上拖"的视觉提示，所以形状要小而明确。
+-->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="@color/ink_secondary" />
+    <corners android:radius="2dp" />
+</shape>

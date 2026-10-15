@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  纸条卡片。
+
+  ## 分层方式
+
+  桌面是暖灰（#F5F3EF），卡片是纯白 —— 明度差本身就把卡片分出来了。
+  阴影只是让纸"离开桌面"一点点，做得很轻。
+
+  阴影颜色用深蓝（#1C2436，和墨色同族）而不是纯黑：
+  纯黑投影在暖灰底上会发脏，带蓝调的投影和整套配色是一家的。
+
+  圆角 20dp：参考稿的卡片圆角都偏大，视觉上更柔和。
+-->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 底层：下移 3dp 的柔和投影 -->
+    <item android:top="3dp">
+        <shape android:shape="rectangle">
+            <solid android:color="#121C2436" />
+            <corners android:radius="20dp" />
+        </shape>
+    </item>
+    <!-- 上层：白纸本体 -->
+    <item android:bottom="3dp">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/paper_white_fill" />
+            <corners android:radius="20dp" />
+        </shape>
+    </item>
+</layer-list>

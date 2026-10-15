@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  列表里的圆形头像底。颜色由代码按发送人名字着色（见 MainActivity）。
+
+  用 oval + solid 而不是直接给 TextView 设背景色，
+  因为纯色矩形背景改不成圆形 —— 那需要 shape 资源。
+-->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval">
+    <solid android:color="@color/aurora" />
+</shape>

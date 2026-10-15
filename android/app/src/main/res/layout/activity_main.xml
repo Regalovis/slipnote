@@ -1,0 +1,415 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  首页。
+
+  ## 结构（照抄用户给的参考图）
+
+  ```
+  ┌────────────────────────┐
+  │  极光头图（占屏约 52%）  │  ← 多层径向渐变叠出来的 Aurora
+  │     小纸条              │
+  │     来自 果果 / 1 小时前 │
+  │     [ 漂浮的纸条 ]       │  ← 参考图里角色的位置
+  │   ～～ 柔和波浪 ～～      │
+  ├────────────────────────┤  ← 白色卡片圆角上盖（负 margin 咬住头图）
+  │  ✏️    📥    ⭐    ⚙️    │  ← 四个快捷入口，紧凑一组
+  │  写纸条 收件箱 收藏夹 设置 │
+  │                        │
+  │  ⬤ 果果   为人民服务    │  ← 最近收到的纸条
+  │  ⬤ 黑猫   晚饭别忘记吃  │
+  └────────────────────────┘
+  ```
+
+  ## 上一版是错的
+
+  上一版是"暖灰桌面 + 深蓝图标块 + 标题 + 白卡 + 三行导航"，
+  那是早期系统应用的排版思路 —— 一屏全是文字，
+  没有任何色域和形状，看起来就是"没设计过"。
+
+  ## 这一版的三处关键改动
+
+  1. **头图**：整屏上半部是一块极光渐变。参考图每屏都有一块
+     "有颜色、有形状"的区域，那是被记住的东西。
+  2. **漂浮的纸条**：参考图的中部是一个角色形象，让整屏有个"活物"。
+     我们没有角色，就用产品自己的主角 —— 一张微微倾斜的白纸条。
+  3. **快捷入口搬进白卡**｜原来是三行带图标的列表行（很像系统设置页），
+     现在是四个紧凑的图标 + 文字。行数从 3 减到 1，省下的空间给内容。
+
+  ## 为什么用 FrameLayout 而不是 ConstraintLayout
+
+  这一版是"头图 + 卡片"纵向两段，卡片要靠负 margin 咬住头图。
+  纵向关系用 LinearLayout 表达最直白；只有卡片内部的快捷入口
+  需要均分，那用 weight 就够了。
+
+  ## 没有底部导航条
+
+  原型里也没有。首页点卡片进子页，子页左上角返回 ——
+  这是自然导航，比在每个页面底部再堆一条导航有意义。
+-->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/desk">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:fillViewport="true"
+        android:overScrollMode="never">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- ========== 头图 ========== -->
+            <FrameLayout
+                android:id="@+id/hero"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/holo_hero"
+                android:minHeight="430dp">
+
+                <!-- 内容层：标题 / 落款 / 漂浮纸条 -->
+                <LinearLayout
+                    android:id="@+id/hero_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="96dp">
+
+                    <!--
+                      App 名：字距拉得很开。
+
+                      这是参考图里很典型的一手 —— 标题不靠加粗取胜，
+                      靠字间空白。中文里把字距拉到 0.34em，
+                      四个字会显得很舒展，和下面的正文形成气口。
+                      textIndent 抵消字距在末尾留下的空白，保证视觉居中。
+                    -->
+                    <TextView
+                        android:id="@+id/tv_hero_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:letterSpacing="0.34"
+                        android:text="@string/app_name"
+                        android:textColor="@color/hero_ink"
+                        android:textSize="22sp"
+                        android:textStyle="bold" />
+
+                    <!--
+                      落款：来自谁 + 多久了。
+
+                      没有纸条时这段会隐藏，头图就只剩 App 名和漂浮纸条，
+                      不会出现"来自 暂无"这种占位文案。
+                    -->
+                    <TextView
+                        android:id="@+id/tv_hero_from"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:textColor="@color/hero_ink_soft"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:id="@+id/tv_hero_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:textColor="@color/hero_ink_soft"
+                        android:textSize="15sp"
+                        android:visibility="gone" />
+
+                    <!--
+                      漂浮的纸条（视觉主角）。
+
+                      宽度固定 168dp，和原型一致；高度 200dp 比宽度大，
+                      竖着的纸才像"纸条"。整体旋转 -2.4° —— 完全水平会显得死板，
+                      歪一点点就有了"随手放的"感觉。
+                    -->
+                    <FrameLayout
+                        android:id="@+id/float_paper"
+                        android:layout_width="168dp"
+                        android:layout_height="200dp"
+                        android:layout_marginTop="34dp"
+                        android:background="@drawable/float_paper"
+                        android:padding="14dp"
+                        android:rotation="-2.4">
+
+                        <!--
+                          纸上显示最新那张纸条的手写内容。
+
+                          用 fitCenter：纸条画布是竖长的，`fitXY` 会把笔迹拉变形。
+                          没有涂鸦时这个 ImageView 隐藏，只显示下面的文字。
+                        -->
+                        <ImageView
+                            android:id="@+id/iv_current_doodle"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:contentDescription="@null"
+                            android:scaleType="fitCenter"
+                            android:visibility="gone" />
+
+                        <!--
+                          没有手写时的文字。楷体 + 大字号 + 居中，
+                          模仿"手写体"的观感 —— 纸条的价值大半在这一点上。
+                        -->
+                        <TextView
+                            android:id="@+id/tv_status"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:lineSpacingMultiplier="1.16"
+                            android:text="@string/status_empty"
+                            android:textColor="@color/ink_on_paper"
+                            android:textSize="21sp"
+                            android:textStyle="bold"
+                            android:typeface="serif" />
+                    </FrameLayout>
+                </LinearLayout>
+
+                <!--
+                  底部波浪。
+
+                  压在头图最下沿，作用是把它和白色卡片之间的那条直线打散。
+                  layout_gravity="bottom" 让它贴着底边，高度自适应。
+                -->
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="86dp"
+                    android:layout_gravity="bottom"
+                    android:contentDescription="@null"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/hero_waves" />
+            </FrameLayout>
+
+            <!-- ========== 底部白卡 ========== -->
+            <!--
+              marginTop 是负的：卡片向上咬住头图 22dp，
+              和波浪的形状咬合。这是参考图里"头图压在卡片上"的做法。
+            -->
+            <LinearLayout
+                android:id="@+id/sheet"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-22dp"
+                android:background="@drawable/sheet_top"
+                android:orientation="vertical"
+                android:paddingStart="24dp"
+                android:paddingTop="24dp"
+                android:paddingEnd="24dp"
+                android:paddingBottom="28dp">
+
+                <!-- 四个快捷入口 -->
+                <!--
+                  紧凑一组靠左，不是平分整行。
+
+                  参考图里四个图标是一簇，右侧留白；平分整行会让它们
+                  看起来像一条工具栏，失去"随手一点"的松弛感。
+                -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingStart="8dp"
+                    android:paddingBottom="20dp">
+
+                    <!-- 写纸条：当前项，图标着色 + 下方一条短线 -->
+                    <LinearLayout
+                        android:id="@+id/q_compose"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="?attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center_horizontal"
+                        android:minWidth="54dp"
+                        android:orientation="vertical"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="10dp">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:contentDescription="@null"
+                            android:src="@drawable/ic_edit"
+                            app:tint="@color/aurora" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="@string/quick_compose"
+                            android:textColor="@color/ink_on_paper"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+
+                    <!-- 收件箱：右上角一个小圆点表示有新内容 -->
+                    <LinearLayout
+                        android:id="@+id/q_inbox"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="32dp"
+                        android:background="?attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center_horizontal"
+                        android:minWidth="54dp"
+                        android:orientation="vertical"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="10dp">
+
+                        <FrameLayout
+                            android:layout_width="24dp"
+                            android:layout_height="24dp">
+
+                            <ImageView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:contentDescription="@null"
+                                android:src="@drawable/ic_inbox"
+                                app:tint="@color/ink_secondary" />
+
+                            <!-- 有新纸条时显示 -->
+                            <View
+                                android:id="@+id/dot_inbox"
+                                android:layout_width="7dp"
+                                android:layout_height="7dp"
+                                android:layout_gravity="top|end"
+                                android:layout_marginTop="-1dp"
+                                android:layout_marginEnd="-1dp"
+                                android:background="@drawable/dot_aurora"
+                                android:visibility="gone" />
+                        </FrameLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="@string/quick_inbox"
+                            android:textColor="@color/ink_on_paper"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/q_fav"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="32dp"
+                        android:background="?attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center_horizontal"
+                        android:minWidth="54dp"
+                        android:orientation="vertical"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="10dp">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:contentDescription="@null"
+                            android:src="@drawable/ic_star"
+                            app:tint="@color/ink_secondary" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="@string/quick_favorites"
+                            android:textColor="@color/ink_on_paper"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/q_settings"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="32dp"
+                        android:background="?attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center_horizontal"
+                        android:minWidth="54dp"
+                        android:orientation="vertical"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="10dp">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:contentDescription="@null"
+                            android:src="@drawable/ic_settings"
+                            app:tint="@color/ink_secondary" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="@string/quick_settings"
+                            android:textColor="@color/ink_on_paper"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- 最近收到的纸条 -->
+                <!--
+                  列表由代码填。三个来源合并去重后按时间倒序：
+                  收件箱、收藏夹、当前纸条（自己刚发的也会出现在这里）。
+                -->
+                <LinearLayout
+                    android:id="@+id/list_recent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" />
+
+                <!-- 一条都没有时的空状态 -->
+                <TextView
+                    android:id="@+id/tv_empty"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:lineSpacingMultiplier="1.5"
+                    android:paddingTop="28dp"
+                    android:paddingBottom="28dp"
+                    android:text="@string/home_empty"
+                    android:textColor="@color/hint_on_paper"
+                    android:textSize="13sp"
+                    android:visibility="gone" />
+
+                <!-- ===== 底部状态 ===== -->
+                <!--
+                  连接状态。原来是三行带图标的列表行之一，
+                  现在压成一行小字放最底下 —— 它是诊断信息，不是功能入口。
+                -->
+                <TextView
+                    android:id="@+id/tv_connection"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:lineSpacingMultiplier="1.4"
+                    android:text="@string/conn_unregistered"
+                    android:textColor="@color/hint_on_paper"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/btn_service"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:background="?attr/selectableItemBackground"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:text="@string/action_start_service"
+                    android:textColor="@color/aurora"
+                    android:textSize="13sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</FrameLayout>

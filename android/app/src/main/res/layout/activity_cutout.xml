@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  抠图页。
+
+  ## 为什么要有独立一页
+
+  之前"抠图"是一个按钮，点完直接出结果 —— 用户没法干预，
+  模型判错就只能重来。这个页面的存在意义就是**让用户能指哪儿删哪儿**。
+
+  ## 版面
+
+  ```
+  ┌────────────────────────┐
+  │ ←  抠贴纸      完成     │  ← 40dp
+  ├────────────────────────┤
+  │                        │
+  │        图片             │  ← 占满剩余，棋盘格显示透明区
+  │      （带棋盘格）        │
+  │                        │
+  ├────────────────────────┤
+  │  容差 ●───────  撤销 ↶  │  ← 一行参数 + 撤销
+  └────────────────────────┘
+  ```
+
+  容差做成滑杆而不是几个档位：模糊边缘的图需要细调，
+  档位太粗会"要么删不干净、要么吃掉主体"。
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/desk"
+    android:orientation="vertical"
+    android:paddingStart="10dp"
+    android:paddingEnd="10dp"
+    android:paddingTop="4dp"
+    android:paddingBottom="8dp">
+
+    <!-- 顶部：返回 / 标题 / 完成 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnBack"
+            style="@style/TopBarButton"
+            android:contentDescription="@string/action_back"
+            app:icon="@drawable/ic_back" />
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="2dp"
+            android:layout_weight="1"
+            android:text="@string/cutout_title"
+            android:textColor="@color/ink_on_paper"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnDone"
+            style="@style/PrimaryAction"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:minWidth="80dp"
+            android:text="@string/cutout_done"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <!-- 提示语：教一次就够了，所以做得轻 -->
+    <TextView
+        android:id="@+id/tvHint"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="6dp"
+        android:paddingStart="10dp"
+        android:text="@string/cutout_hint"
+        android:textColor="@color/ink_secondary"
+        android:textSize="12sp" />
+
+    <!-- 图片区：占满剩余空间 -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@drawable/cutout_stage">
+
+        <com.notedrop.demo.sticker.CutoutView
+            android:id="@+id/cutout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <!-- 抠图计算中的遮罩。逐像素操作有几百毫秒，不给反馈会像卡死 -->
+        <LinearLayout
+            android:id="@+id/loading"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#E6FFFFFF"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <ProgressBar
+                android:layout_width="32dp"
+                android:layout_height="32dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/cutout_running"
+                android:textColor="@color/ink_secondary"
+                android:textSize="13sp" />
+        </LinearLayout>
+    </FrameLayout>
+
+    <!-- 底部：容差 + 撤销 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="8dp"
+            android:text="@string/cutout_tolerance"
+            android:textColor="@color/ink_secondary"
+            android:textSize="13sp" />
+
+        <com.google.android.material.slider.Slider
+            android:id="@+id/sliderTolerance"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:stepSize="1"
+            android:value="32"
+            android:valueFrom="4"
+            android:valueTo="120" />
+
+        <TextView
+            android:id="@+id/tvTolerance"
+            android:layout_width="28dp"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:textColor="@color/ink_on_paper"
+            android:textSize="13sp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnUndo"
+            style="@style/TopBarButton"
+            android:layout_marginStart="4dp"
+            android:text="@string/cutout_undo" />
+    </LinearLayout>
+
+    <!-- 快捷操作 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnAutoCorners"
+            style="@style/ToolButton"
+            android:text="@string/cutout_auto" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnReset"
+            style="@style/ToolButton"
+            android:text="@string/cutout_reset" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+</LinearLayout>

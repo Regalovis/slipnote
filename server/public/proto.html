@@ -1,0 +1,729 @@
+<!--
+  界面原型。
+
+  放在服务器上让用户用手机直接打开 —— 截图是静态的，
+  在真机上滑动、看字号手感才准。
+
+  这个文件只用于评审，不属于产品功能。定稿后会删掉。
+-->
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>小纸条 · 界面原型</title>
+<style>
+/*
+  小纸条界面原型（移动端）
+
+  ## 核心约束
+
+  1. 主视觉占屏 ≥ 50%（参考稿每屏都有一个大面积色域或图块）
+  2. 标题 : 正文 字号比 ≥ 3:1
+  3. 纸条是"实物"：倾斜、有厚度、有投影，不是数据卡片
+
+  三种风格切换：暖光 / 夜间 / 极简白
+*/
+
+:root {
+  --ink:    #1C2436;
+  --ink-2:  #6B7284;
+  --ink-3:  #A5AAB8;
+  --brand:  #314568;
+  --stage:  #2A2A2E;
+}
+
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+html, body {
+  margin: 0; padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+               "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  background: var(--stage);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  overscroll-behavior: none;
+}
+
+/* ============ 顶部风格切换 ============ */
+
+.switcher {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  gap: 8px;
+  padding: 12px 16px;
+  background: rgba(42,42,46,.92);
+  backdrop-filter: blur(12px);
+  justify-content: center;
+}
+
+.switcher button {
+  flex: 1;
+  max-width: 120px;
+  height: 36px;
+  border: none;
+  border-radius: 999px;
+  background: rgba(255,255,255,.10);
+  color: #C8C8CE;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all .18s;
+}
+
+.switcher button.on {
+  background: #fff;
+  color: #1C2436;
+}
+
+/* 屏幕容器：真机上铺满 */
+.device {
+  position: relative;
+  width: 100%;
+  min-height: 100dvh;
+  padding-top: 60px;
+  overflow: hidden;
+}
+
+.screen {
+  position: relative;
+  min-height: calc(100dvh - 60px);
+  overflow: hidden;
+}
+
+/* ============ 三种风格 ============ */
+
+/* A 暖光 */
+.style-A .screen {
+  background:
+    radial-gradient(130% 90% at 15% 4%,  #FFE7BE 0%, rgba(255,231,190,0) 58%),
+    radial-gradient(100% 70% at 92% 40%, #FDF0DE 0%, rgba(253,240,222,0) 66%),
+    radial-gradient(120% 90% at 40% 100%, #F7EFE4 0%, rgba(247,239,228,0) 60%),
+    linear-gradient(170deg, #FCF5EA 0%, #F6F1E9 45%, #F2EDE6 100%);
+}
+.style-A .glow { background: radial-gradient(circle, rgba(255,214,150,.5) 0%, rgba(255,214,150,0) 68%); }
+
+/* B 夜间 */
+.style-B .screen {
+  background:
+    radial-gradient(110% 70% at 20% 0%, #1B2334 0%, rgba(27,35,52,0) 60%),
+    linear-gradient(180deg, #0C0E13 0%, #12151D 100%);
+  color: #EDEEF2;
+}
+.style-B .glow { background: radial-gradient(circle, rgba(120,150,210,.28) 0%, rgba(120,150,210,0) 70%); }
+.style-B .appname { color: #EDEEF2; }
+.style-B .subtitle { color: #8B93A6; }
+.style-B .paper { background: #E8E6E1; }
+.style-B .paper { box-shadow: 0 1px 2px rgba(0,0,0,.5), 0 12px 30px rgba(0,0,0,.55), 0 34px 60px rgba(0,0,0,.45); }
+.style-B .nav-item svg { color: #7D93BB; }
+.style-B .nav-item .label { color: #E4E7EF; }
+.style-B .nav-item .count { color: #6B7488; }
+.style-B .hairline { background: rgba(255,255,255,.07); }
+.style-B .conn { color: #5F6779; }
+.style-B .conn a { color: #7D93BB; }
+.style-B .cta { background: linear-gradient(140deg,#5E7BAA 0%,#3E5378 100%); box-shadow: 0 8px 24px rgba(94,123,170,.32); }
+.style-B .signature { background: rgba(60,74,100,.85); color: #C8D4EC; }
+.style-B .stamp { color: #9BA1B0; }
+
+/* C 极简白 */
+.style-C .screen {
+  background:
+    radial-gradient(70% 45% at 50% 44%, #FFF3F8 0%, rgba(255,243,248,0) 60%),
+    linear-gradient(180deg, #FFFFFF 0%, #FDFCFE 100%);
+}
+.style-C .glow {
+  background: radial-gradient(circle, rgba(214,120,220,.26) 0%, rgba(150,110,240,.15) 40%, rgba(255,255,255,0) 72%);
+  filter: blur(14px);
+}
+
+.glow {
+  position: absolute;
+  width: 430px; height: 430px;
+  left: -90px; top: -110px;
+  filter: blur(8px);
+  pointer-events: none;
+}
+
+/* ============ 内容布局 ============ */
+
+.content {
+  position: relative;
+  z-index: 10;
+  min-height: calc(100dvh - 60px);
+  padding: 20px 22px 28px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---- 顶部 ---- */
+
+.top { display: flex; align-items: center; gap: 12px; }
+
+.tile {
+  width: 42px; height: 42px;
+  border-radius: 13px;
+  display: grid; place-items: center;
+  flex: 0 0 auto;
+  background: linear-gradient(140deg, #3F5578 0%, #2A3B59 100%);
+  box-shadow: 0 4px 12px rgba(49,69,104,.22);
+}
+
+.style-B .tile { background: linear-gradient(140deg,#4A6088 0%,#2C3A54 100%); }
+
+.tile svg { width: 22px; height: 22px; }
+
+.appname { font-size: 21px; font-weight: 700; letter-spacing: -.01em; }
+
+.subtitle {
+  font-size: 14px;
+  color: var(--ink-2);
+  margin: 10px 0 0 54px;
+}
+
+/* ---- 纸条 ---- */
+
+/*
+  纸条是主角，占屏约 52%。
+  三个细节让它像实物：
+    · 轻微倾斜（真纸不会摆得笔直）
+    · 双层投影（近的压出厚度，远的做出浮起感）
+    · 纸面有一道对角高光（模拟受光）
+*/
+.paper {
+  position: relative;
+  margin-top: 22px;
+  height: 54dvh;
+  min-height: 340px;
+  max-height: 480px;
+  border-radius: 6px 6px 8px 8px;
+  transform: rotate(-1.6deg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: #fff;
+  box-shadow:
+    0 1px 2px rgba(28,36,54,.10),
+    0 10px 24px rgba(28,36,54,.10),
+    0 30px 56px rgba(28,36,54,.10);
+}
+
+.paper::before {
+  content: "";
+  position: absolute; inset: 0;
+  background: linear-gradient(150deg,
+    rgba(255,255,255,.9) 0%,
+    rgba(255,255,255,0) 34%,
+    rgba(0,0,0,0) 72%,
+    rgba(28,36,54,.03) 100%);
+  pointer-events: none;
+}
+
+.handwriting { position: relative; z-index: 2; padding: 30px; }
+
+/*
+  手写字。原型里没有真实笔迹，用楷体近似。
+  Android 版会渲染用户真实画的位图。
+*/
+.ink {
+  font-family: "Kaiti SC","STKaiti","KaiTi","楷体",serif;
+  font-size: 66px;
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: .05em;
+  color: #10131B;
+  transform: rotate(-1deg);
+  text-align: center;
+}
+
+/* 落款胶囊压在右下角（参考 Luma 的状态标做法） */
+.signature {
+  position: absolute;
+  right: 14px; bottom: 14px;
+  z-index: 3;
+  display: flex; align-items: center; gap: 7px;
+  padding: 6px 12px 6px 8px;
+  background: rgba(234,238,246,.92);
+  backdrop-filter: blur(8px);
+  border-radius: 999px;
+  font-size: 12px; font-weight: 600;
+  color: var(--brand);
+  box-shadow: 0 3px 10px rgba(28,36,54,.10);
+}
+
+.avatar {
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  background: linear-gradient(140deg,#6E8CC0 0%,#314568 100%);
+  display: grid; place-items: center;
+  font-size: 10px; color: #fff; font-weight: 700;
+}
+
+.stamp {
+  position: absolute;
+  left: 16px; bottom: 18px;
+  z-index: 3;
+  font-size: 11px;
+  color: var(--ink-3);
+}
+
+/* ---- 主按钮 ---- */
+
+.cta {
+  margin-top: 22px;
+  height: 56px;
+  border: none;
+  border-radius: 999px;
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  font-family: inherit;
+  font-size: 17px; font-weight: 600;
+  color: #fff;
+  cursor: pointer;
+  background: linear-gradient(140deg,#3A5075 0%,#2A3B59 100%);
+  box-shadow: 0 8px 22px rgba(49,69,104,.30), 0 2px 6px rgba(49,69,104,.20);
+}
+
+.cta svg { width: 19px; height: 19px; }
+
+/* ---- 导航 ---- */
+
+.nav { margin-top: auto; padding-top: 18px; }
+
+.nav-item {
+  display: flex; align-items: center; gap: 14px;
+  padding: 15px 2px;
+  cursor: pointer;
+}
+
+.nav-item svg { width: 21px; height: 21px; flex: 0 0 auto; color: var(--brand); }
+.nav-item .label { flex: 1; font-size: 16px; font-weight: 500; }
+.nav-item .count { font-size: 15px; color: var(--ink-3); font-variant-numeric: tabular-nums; }
+.nav-item .chev { width: 17px; height: 17px; opacity: .5; }
+
+.hairline { height: 1px; background: rgba(28,36,54,.08); }
+
+.conn { margin-top: 20px; font-size: 12px; color: var(--ink-3); line-height: 1.55; }
+.conn a { color: var(--brand); text-decoration: none; font-weight: 600; }
+
+/* ============ 收件箱 ============ */
+
+.page-head {
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 14px;
+}
+
+.back {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  display: grid; place-items: center;
+  background: rgba(255,255,255,.62);
+  backdrop-filter: blur(8px);
+  cursor: pointer;
+  flex: 0 0 auto;
+}
+
+.style-B .back { background: rgba(40,48,64,.6); color: #C8CEDA; }
+
+.list-head { font-size: 32px; font-weight: 700; letter-spacing: -.02em; }
+.list-sub { font-size: 14px; color: var(--ink-2); margin-top: 4px; margin-bottom: 18px; }
+.style-B .list-head { color: #EDEEF2; }
+.style-B .list-sub { color: #8B93A6; }
+
+.mail-row { display: flex; gap: 14px; padding: 15px 0; }
+
+/* 缩略图：纸条小样，保留同样的倾斜与投影，只是尺寸缩小 */
+.thumb {
+  position: relative;
+  width: 74px; height: 94px;
+  flex: 0 0 auto;
+  border-radius: 4px;
+  background: #fff;
+  transform: rotate(-1.4deg);
+  display: grid; place-items: center;
+  box-shadow: 0 1px 2px rgba(28,36,54,.10), 0 6px 14px rgba(28,36,54,.10);
+}
+
+.style-B .thumb { background: #E8E6E1; box-shadow: 0 1px 2px rgba(0,0,0,.5), 0 6px 16px rgba(0,0,0,.5); }
+
+.thumb .mini {
+  font-family: "Kaiti SC","STKaiti","KaiTi","楷体",serif;
+  font-size: 30px; font-weight: 700; color: #10131B;
+  transform: rotate(-2deg);
+}
+
+/* 状态胶囊压左下角 */
+.badge {
+  position: absolute;
+  left: -6px; bottom: -6px;
+  padding: 3px 9px;
+  border-radius: 999px;
+  font-size: 10px; font-weight: 700;
+  white-space: nowrap;
+  box-shadow: 0 2px 6px rgba(28,36,54,.14);
+}
+.badge.new  { background: #314568; color: #fff; }
+.badge.fav  { background: #F5D98A; color: #6B4E12; }
+.badge.read { background: #fff; color: #6B7284; border: 1px solid rgba(28,36,54,.10); }
+
+.mail-body { flex: 1; min-width: 0; padding-top: 2px; }
+
+.mail-from {
+  display: flex; align-items: center; gap: 7px;
+  font-size: 13px; color: var(--ink-2); margin-bottom: 5px;
+}
+.style-B .mail-from { color: #8B93A6; }
+
+.dot {
+  width: 18px; height: 18px; border-radius: 50%;
+  background: linear-gradient(140deg,#6E8CC0 0%,#314568 100%);
+  color: #fff; font-size: 9px; font-weight: 700;
+  display: grid; place-items: center; flex: 0 0 auto;
+}
+
+.mail-title {
+  font-size: 16px; font-weight: 600; line-height: 1.35;
+  margin-bottom: 6px;
+  overflow: hidden; text-overflow: ellipsis;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+}
+.style-B .mail-title { color: #E7E9F0; }
+
+/* 元信息：图标 + 短文字，不是一整句 */
+.mail-meta {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 13px; color: var(--ink-2); margin-top: 3px;
+}
+.style-B .mail-meta { color: #8B93A6; }
+.mail-meta svg { width: 14px; height: 14px; opacity: .75; flex: 0 0 auto; }
+
+/* ============ 写纸条 ============ */
+
+.compose-paper {
+  position: relative;
+  margin-top: 16px;
+  flex: 1;
+  border-radius: 8px;
+  background: #fff;
+  transform: rotate(-0.8deg);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow:
+    0 1px 2px rgba(28,36,54,.10),
+    0 10px 24px rgba(28,36,54,.10),
+    0 28px 52px rgba(28,36,54,.09);
+}
+
+.compose-text {
+  padding: 20px 20px 0;
+  font-size: 20px;
+  line-height: 1.45;
+  color: #10131B;
+  min-height: 64px;
+}
+
+.caret {
+  display: inline-block;
+  width: 2px; height: 22px;
+  background: var(--brand);
+  vertical-align: -3px;
+  animation: blink 1.1s step-end infinite;
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+.compose-divider { margin: 14px 20px; height: 1px; background: rgba(28,36,54,.09); }
+
+.compose-canvas {
+  flex: 1;
+  display: grid; place-items: center;
+  padding: 10px 26px;
+}
+
+.compose-canvas .ink { font-size: 48px; }
+
+.toolbar { display: flex; gap: 8px; padding-top: 18px; }
+
+.tool {
+  flex: 1;
+  height: 48px;
+  border: none;
+  border-radius: 14px;
+  background: rgba(255,255,255,.72);
+  backdrop-filter: blur(10px);
+  display: grid; place-items: center;
+  gap: 2px;
+  font-family: inherit;
+  font-size: 12px; font-weight: 600;
+  color: var(--ink);
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(28,36,54,.06);
+}
+
+.style-B .tool { background: rgba(40,48,64,.72); color: #D8DCE6; }
+
+.tool.active {
+  background: linear-gradient(140deg,#3A5075 0%,#2A3B59 100%);
+  color: #fff;
+  box-shadow: 0 6px 16px rgba(49,69,104,.28);
+}
+
+.tool svg { width: 18px; height: 18px; }
+
+.swatch {
+  width: 24px; height: 24px; border-radius: 50%;
+  border: 2px solid #fff;
+  box-shadow: 0 0 0 1px rgba(28,36,54,.14);
+}
+
+.send-row { display: flex; gap: 10px; margin-top: 10px; }
+
+.btn-ghost {
+  height: 50px; padding: 0 22px;
+  border: none; border-radius: 999px;
+  background: rgba(255,255,255,.62);
+  backdrop-filter: blur(10px);
+  font-family: inherit;
+  font-size: 14px; font-weight: 600;
+  color: var(--ink-2);
+  cursor: pointer;
+}
+.style-B .btn-ghost { background: rgba(40,48,64,.62); color: #98A2B6; }
+
+.btn-send {
+  flex: 1; height: 50px;
+  border: none; border-radius: 999px;
+  font-family: inherit;
+  font-size: 16px; font-weight: 600; color: #fff;
+  cursor: pointer;
+  background: linear-gradient(140deg,#3A5075 0%,#2A3B59 100%);
+  box-shadow: 0 8px 20px rgba(49,69,104,.28);
+}
+.style-B .btn-send { background: linear-gradient(140deg,#5E7BAA 0%,#3E5378 100%); box-shadow: 0 8px 22px rgba(94,123,170,.30); }
+
+/* 屏幕切换（底部） */
+.tabs {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  gap: 8px;
+  padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
+  background: rgba(42,42,46,.92);
+  backdrop-filter: blur(12px);
+  justify-content: center;
+}
+
+.tabs button {
+  flex: 1;
+  max-width: 110px;
+  height: 40px;
+  border: none;
+  border-radius: 999px;
+  background: rgba(255,255,255,.10);
+  color: #C8C8CE;
+  font-family: inherit;
+  font-size: 13px; font-weight: 600;
+  cursor: pointer;
+}
+
+.tabs button.on { background: #fff; color: #1C2436; }
+
+.view { display: none; }
+.view.on { display: block; }
+</style>
+</head>
+<body>
+
+<div class="switcher">
+  <button data-style="A" class="on">暖光</button>
+  <button data-style="B">夜间</button>
+  <button data-style="C">极简白</button>
+</div>
+
+<div class="device style-A" id="device">
+
+  <!-- ========== 首页 ========== -->
+  <div class="view on" data-view="home">
+    <div class="screen">
+      <div class="glow"></div>
+      <div class="content">
+        <div class="top">
+          <div class="tile">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M6 2h9l5 5v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z" fill="#fff"/>
+              <path d="M8.5 12h7M8.5 15.5h7M8.5 19h4" stroke="#314568" stroke-width="1.6" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="appname">小纸条</div>
+        </div>
+        <div class="subtitle">有张纸条在等你看</div>
+
+        <div class="paper">
+          <div class="handwriting"><div class="ink">为人民<br>服务</div></div>
+          <div class="stamp">1 小时前</div>
+          <div class="signature"><span class="avatar">果</span><span>来自 果果</span></div>
+        </div>
+
+        <button class="cta">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25z" fill="#fff"/></svg>
+          写一张小纸条
+        </button>
+
+        <div class="nav">
+          <div class="nav-item">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zm0 12h-4a3 3 0 0 1-6 0H5V5h14v10z" fill="currentColor"/></svg>
+            <span class="label">收件箱</span><span class="count">6</span>
+            <svg class="chev" viewBox="0 0 24 24" fill="none"><path d="M10 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="hairline"></div>
+          <div class="nav-item">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.7-6.2 3.7 1.6-7L2 9.2l7.1-.6L12 2z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+            <span class="label">收藏夹</span><span class="count">2</span>
+            <svg class="chev" viewBox="0 0 24 24" fill="none"><path d="M10 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="hairline"></div>
+          <div class="nav-item">
+            <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3.2" stroke="currentColor" stroke-width="1.7"/><path d="M12 2.5l1 2.2 2.4-.6.6 2.4 2.2 1-.9 2.2 1.6 1.9-1.9 1.6.6 2.4-2.4.6-1 2.2-2.2-.9-1.9 1.6-1.6-1.9-2.4.6-.6-2.4-2.2-1 .9-2.2L2.6 11l1.9-1.6-.6-2.4 2.4-.6.9-2.2 2.2.9L11 2.5z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
+            <span class="label">连接设置</span>
+            <svg class="chev" viewBox="0 0 24 24" fill="none"><path d="M10 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="conn">已连接为「果果」<br><a>重新连接</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== 收件箱 ========== -->
+  <div class="view" data-view="list">
+    <div class="screen">
+      <div class="glow"></div>
+      <div class="content">
+        <div class="page-head">
+          <div class="back"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        </div>
+        <div class="list-head">收件箱</div>
+        <div class="list-sub">6 张纸条</div>
+
+        <div class="mail-row">
+          <div class="thumb"><span class="mini">为</span><span class="badge new">新</span></div>
+          <div class="mail-body">
+            <div class="mail-from"><span class="dot">果</span>果果</div>
+            <div class="mail-title">为人民服务</div>
+            <div class="mail-meta">
+              <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.7"/><path d="M12 7v5l3 2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+              1 小时前
+            </div>
+          </div>
+        </div>
+        <div class="hairline"></div>
+
+        <div class="mail-row">
+          <div class="thumb" style="background:#FFF8DC"><span class="mini">晚</span><span class="badge fav">已收藏</span></div>
+          <div class="mail-body">
+            <div class="mail-from"><span class="dot">猫</span>黑猫</div>
+            <div class="mail-title">晚饭别忘记吃</div>
+            <div class="mail-meta">
+              <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.7"/><path d="M12 7v5l3 2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+              昨天
+            </div>
+          </div>
+        </div>
+        <div class="hairline"></div>
+
+        <div class="mail-row">
+          <div class="thumb"><span class="mini">谢</span><span class="badge read">已读</span></div>
+          <div class="mail-body">
+            <div class="mail-from"><span class="dot">钱</span>钱钱</div>
+            <div class="mail-title">谢谢你今天帮我带咖啡</div>
+            <div class="mail-meta">
+              <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.7"/><path d="M12 7v5l3 2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+              2 天前
+            </div>
+          </div>
+        </div>
+        <div class="hairline"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== 写纸条 ========== -->
+  <div class="view" data-view="compose">
+    <div class="screen">
+      <div class="glow"></div>
+      <div class="content">
+        <div class="page-head">
+          <div class="back"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div>
+            <div class="appname" style="font-size:24px">写一张</div>
+            <div class="subtitle" style="margin:2px 0 0">发给 果果</div>
+          </div>
+        </div>
+
+        <div class="compose-paper">
+          <div class="compose-text">今天降温，<span class="caret"></span></div>
+          <div class="compose-divider"></div>
+          <div class="compose-canvas"><div class="ink">记得<br>带外套</div></div>
+          <div class="stamp" style="bottom:12px">手写 · 双指可放大</div>
+        </div>
+
+        <div class="toolbar">
+          <button class="tool active">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25z" fill="currentColor"/></svg>
+            画笔
+          </button>
+          <button class="tool">
+            <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.8"/><circle cx="8.5" cy="10.5" r="1.5" fill="currentColor"/><path d="M21 16l-5-5-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+            描画
+          </button>
+          <button class="tool">
+            <svg viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.8"/><path d="M16 16l4 4M8 11h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+            缩放
+          </button>
+          <button class="tool" style="flex:0 0 60px"><span class="swatch" style="background:#10131B"></span></button>
+        </div>
+
+        <div class="send-row">
+          <button class="btn-ghost">清空</button>
+          <button class="btn-send">发送</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="tabs">
+  <button data-view="home" class="on">首页</button>
+  <button data-view="list">收件箱</button>
+  <button data-view="compose">写纸条</button>
+</div>
+
+<script>
+// 风格切换
+document.querySelectorAll('.switcher button').forEach(btn => {
+  btn.onclick = () => {
+    document.querySelectorAll('.switcher button').forEach(b => b.classList.remove('on'))
+    btn.classList.add('on')
+    const d = document.getElementById('device')
+    d.className = 'device style-' + btn.dataset.style
+  }
+})
+
+// 屏幕切换
+document.querySelectorAll('.tabs button').forEach(btn => {
+  btn.onclick = () => {
+    document.querySelectorAll('.tabs button').forEach(b => b.classList.remove('on'))
+    btn.classList.add('on')
+    document.querySelectorAll('.view').forEach(v => {
+      v.classList.toggle('on', v.dataset.view === btn.dataset.view)
+    })
+    window.scrollTo(0, 0)
+  }
+})
+</script>
+
+</body>
+</html>

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  设计令牌。
+
+  ## 取色依据：App 图标
+
+  图标本身已经定义了这套产品的颜色 ——
+  深蓝纸张（#314568）+ 暖米黄内页（#FFF8DC）。
+  上一版我用了完全无关的亮蓝 #2F6FED，等于把已经建立好的品牌语言丢掉了。
+
+  现在的配色逻辑：
+    桌面（页面底）  = 暖灰，像木桌，让白纸有地方可放
+    纸              = 纯白
+    墨              = 带蓝的深色，和深蓝纸张同族
+    强调色          = 图标里的深蓝，克制使用
+    暖色            = 图标里的米黄，只做氛围光，不做界面元素
+-->
+<resources>
+
+    <!-- ===== 桌面与纸 ===== -->
+
+    <!--
+      页面底色。
+
+      从暖灰 #F5F3EF 改成极淡的冷白紫 —— 全息那套是冷调的，
+      配暖灰会让上下半屏像两个世界。留一点点紫，白卡片才压得住。
+    -->
+    <color name="desk">#F7F6FC</color>
+    <!-- 兼容旧名 -->
+    <color name="screen_bg">@color/desk</color>
+
+    <!-- 纸条：纯白 -->
+    <color name="paper_white_fill">#FFFFFF</color>
+
+    <!-- 暖光：铺在纸条背后的氛围光，来自图标里的米黄 -->
+    <color name="warm_glow">#FFF0D8</color>
+
+    <!-- ===== 墨色三级 ===== -->
+
+    <!-- 主文字：带蓝的深色，和深蓝纸张同族，比纯黑柔和 -->
+    <color name="ink_on_paper">#1C2436</color>
+    <color name="ink_secondary">#6B7284</color>
+    <color name="hint_on_paper">#A5AAB8</color>
+
+    <!-- 兼容旧引用 -->
+    <color name="paper_ink">#1C2436</color>
+    <color name="paper_ink_light">#6B7284</color>
+
+    <!--
+      ===== 强调色 =====
+
+      这一组是**旧名**，值已经统一到极光紫。
+
+      为什么不直接删掉换名：`@color/brand` 被几个 Kotlin 文件
+      和 pill_bg 引用着，逐个改名要动四五处，而改名本身不产生任何视觉变化。
+      留着这组别名，改颜色的地方仍然只有一处（aurora），
+      哪天要彻底清理再说。
+    -->
+    <color name="brand">@color/aurora</color>
+    <color name="brand_pressed">@color/aurora_pressed</color>
+    <color name="brand_soft">@color/aurora_soft</color>
+
+    <!-- ===== 分隔与容器 ===== -->
+
+    <color name="divider">#E6E3DD</color>
+    <color name="surface_muted">#EDEBE6</color>
+    <color name="paper_edge_color">#E6E3DD</color>
+
+    <!-- ===== 纸张样式（用户可选的三种纸）===== -->
+
+    <color name="paper_yellow">#FFF8DC</color>
+    <color name="paper_yellow_dark">#F2E4BE</color>
+
+    <color name="danger">#C4483C</color>
+
+    <!-- ===== 极光（Aurora）===== -->
+
+    <!--
+      主色：全息紫。
+
+      配色这块我走过三段弯路：先照抄参考图的青绿，再做"荧光绿"，
+      然后是极光紫 —— 但极光那版底色偏暗，用户反馈"整体看起来很暗"。
+
+      现在按**全息箔纸**的逻辑定色：
+
+        底色接近白，颜色靠**明度**取胜，不靠饱和度。
+
+      所以主色从 #6C5CE7 提到 #8B7BF0 —— 更亮、更薄。
+      它在白底上做小面积点缀仍然清楚，但不再压得整屏发沉。
+      更饱和的紫只留在头图渐变里做氛围，不参与界面元素。
+    -->
+    <color name="aurora">#8B7BF0</color>
+    <color name="aurora_pressed">#7361E0</color>
+    <!-- 主色的极淡底，用于选中态 -->
+    <color name="aurora_soft">#F1EEFE</color>
+
+    <!--
+      底部白色卡片的底色。
+
+      和页面底色 desk 分开：desk 是头图之外那圈背景，
+      sheet 是浮在上面的卡片。浅色下两者都接近白，
+      但不能是同一个值 —— 卡片要靠一点点明度差"浮"起来。
+    -->
+    <color name="sheet">#FFFFFF</color>
+
+    <!--
+      头图上的文字。
+
+      注意：**不是白色**。头图底是接近白的浅色全息渐变，
+      白字压上去等于看不见。这里用带一点紫的深墨色，
+      既读得清，又和整块淡彩同族。
+    -->
+    <color name="hero_ink">#2A2440</color>
+    <color name="hero_ink_soft">#7A7291</color>
+
+    <!-- 旧名保留成别名，指向新的头图文字色（见下方说明） -->
+    <color name="on_aurora">@color/hero_ink</color>
+    <color name="on_aurora_soft">@color/hero_ink_soft</color>
+
+</resources>

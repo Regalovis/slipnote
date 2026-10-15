@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  头图底部的柔和波浪。
+
+  作用是把"渐变色域"和"白色卡片"之间的那条直线打散 ——
+  两片纯色直接相接会显得很硬，加一层起伏就有了手作感，
+  也和"纸条"这个题材里的纸张边缘呼应。
+
+  两条波形用不同透明度错开：前面一条实一点（0.52），
+  后面一条虚一点（0.28），重叠处自然出现层次。
+  波形起伏约 20px（按 390 宽的画布），比第一版的 12px 明显。
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="390dp"
+    android:height="86dp"
+    android:viewportWidth="390"
+    android:viewportHeight="86">
+
+    <!-- 后层：更淡的波 -->
+    <path
+        android:fillColor="#47FFFFFF"
+        android:pathData="M0,44 C68,10 132,62 204,46 C272,32 332,2 390,34 L390,86 L0,86 Z" />
+
+    <!-- 前层：更实的波，接住下面的白色卡片 -->
+    <path
+        android:fillColor="#85FFFFFF"
+        android:pathData="M0,62 C82,32 152,74 234,56 C304,40 352,20 390,50 L390,86 L0,86 Z" />
+</vector>

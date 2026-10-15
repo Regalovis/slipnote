@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  "有新内容"的小圆点。
+
+  参考图里"收件箱"图标的右上角有个小点，用来提示有新东西。
+  比数字角标轻，也符合这个产品"安静"的调性。
+-->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval">
+    <solid android:color="@color/aurora" />
+</shape>

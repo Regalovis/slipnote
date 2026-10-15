@@ -1,0 +1,14 @@
+*.iml
+.gradle
+/local.properties
+/.idea
+/build
+/captures
+.externalNativeBuild
+.cxx
+/app/build
+
+# JVM 崩溃转储。构建机内存紧张时 JVM 会在这里丢下 hs_err_pid*.log，
+# 单个几十 KB，但一次编译失败能生成十几个，不该进版本库。
+hs_err_pid*.log
+replay_pid*.log

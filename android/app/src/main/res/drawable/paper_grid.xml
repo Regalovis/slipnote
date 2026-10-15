@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  方格本纸条：白底 + 平铺网格。
+  用 layer-list 而不是代码拼 LayerDrawable，是为了让小部件也能
+  通过 setBackgroundResource 使用（RemoteViews 只能吃资源）。
+-->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#FFFFFF" />
+            <corners android:radius="18dp" />
+        </shape>
+    </item>
+    <item>
+        <bitmap
+            android:gravity="top|start"
+            android:src="@drawable/paper_grid_tile"
+            android:tileMode="repeat" />
+    </item>
+</layer-list>

@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">小纸条</string>
+    <string name="widget_label">小纸条</string>
+    <string name="widget_description">在桌面上留一张纸条给 TA</string>
+
+    <string name="default_sender">我</string>
+
+    <string name="compose_title">写一张小纸条</string>
+    <string name="hint_text">写点什么…</string>
+    <string name="action_send">发送</string>
+    <string name="action_clear">清空</string>
+    <string name="toast_empty">写点什么再发吧</string>
+    <string name="sent_toast">小纸条已贴上桌面</string>
+
+    <string name="preview_note">今天降温，记得带外套</string>
+
+    <string name="status_empty">桌面上还没有纸条。写一张试试。</string>
+    <string name="status_current">当前纸条：%1$s\n（%2$s）</string>
+    <string name="action_compose">写一张小纸条</string>
+    <string name="action_undo">撤销</string>
+
+    <!-- 纸张与画笔 -->
+    <string name="label_paper">纸张</string>
+    <string name="paper_white">白纸</string>
+    <string name="paper_grid">方格</string>
+    <string name="paper_cream">米黄</string>
+    <string name="tool_pen">笔</string>
+    <string name="tool_eraser">橡皮</string>
+    <string name="tool_color">颜色</string>
+    <string name="tool_tracing">描画</string>
+    <string name="tool_zoom">缩放</string>
+    <string name="tool_sticker">贴纸</string>
+    <string name="tool_sticker_remove">删除贴纸</string>
+    <string name="sticker_panel_title">贴纸</string>
+    <string name="sticker_new">从相册抠一张</string>
+    <string name="sticker_library">贴纸库</string>
+    <string name="sticker_empty">贴纸库还是空的。\n点「从相册抠一张」，选一张图自动抠掉背景。</string>
+    <string name="sticker_cutting">正在抠图…</string>
+    <string name="sticker_cut_done">抠好了，拖动调整位置</string>
+    <string name="sticker_cut_failed">抠图失败，换一张图试试</string>
+    <string name="sticker_added">已贴到纸条上</string>
+    <string name="sticker_hint">拖动移动 · 双指缩放旋转</string>
+    <string name="sticker_tap_hint">点一下贴纸，可以取下来收进贴纸库</string>
+    <string name="sticker_take_title">这张贴纸</string>
+    <string name="sticker_take">收进我的贴纸库</string>
+    <string name="sticker_take_ok">已收进贴纸库，可以贴到别的纸条上</string>
+    <string name="sticker_take_exists">这张贴纸已经在你的贴纸库里了</string>
+    <string name="sticker_take_failed">取下失败，贴纸可能已被清理</string>
+    <string name="sticker_restick">再贴到新纸条上</string>
+    <string name="sticker_restick_copied">已经放进新纸条，摆好位置再发</string>
+    <string name="zoom_active">已放大 · 双指可调</string>
+    <string name="tracing_pick">选择一张图片垫在下面</string>
+    <string name="tracing_locked">已锁定 · 照着描吧</string>
+    <string name="tracing_unlocked">拖动调整位置</string>
+    <string name="tracing_menu_title">描画设置</string>
+    <string name="tracing_action_lock">锁定并开始描画</string>
+    <string name="tracing_action_unlock">解锁调整位置</string>
+    <string name="tracing_action_alpha">调整透明度</string>
+    <string name="tracing_action_remove">移除参考图</string>
+    <string name="tracing_hint">参考图只是垫在下面，不会发给对方</string>
+    <string name="taper_title">笔锋强度</string>
+    <string name="brush_title">画笔设置</string>
+    <string name="taper_hint">越强，写得快时笔画越细</string>
+    <string name="zoom_title">缩放</string>
+    <string name="zoom_hint">双指缩放可以精细书写，导出时仍是完整画布</string>
+    <string name="zoom_reset">回到原始大小</string>
+    <string name="zoom_current">当前放大 %1$.1f 倍</string>
+    <string name="tracing_load_failed">图片打不开，换一张试试</string>
+    <string name="width_thin">细</string>
+    <string name="width_mid">中</string>
+    <string name="width_thick">粗</string>
+    <string name="width_label">粗细：%1$s</string>
+    <string name="orient_portrait">竖版</string>
+    <string name="orient_landscape">横版</string>
+
+    <!-- 收件人选择 -->
+    <string name="recipient_pick">选择收件人</string>
+    <string name="recipient_to">发给：%1$s</string>
+    <string name="recipient_title">这张纸条发给谁</string>
+    <string name="recipient_no_peer">还没有可以发送的人。先去「连接设置」配对，或加入一个群组。</string>
+    <string name="recipient_group_chain">群「%1$s」· 接力</string>
+    <string name="recipient_group_random">群「%1$s」· 随机匿名</string>
+    <string name="group_need_members">这个群至少要有 2 个人才能传纸条</string>
+    <string name="sent_group_chain">已接力给群里的下一位</string>
+    <string name="sent_group_random">已随机发给群里的一个人</string>
+
+    <!-- 收藏 -->
+    <string name="favorites_title">收藏的纸条</string>
+    <string name="note_detail_title">纸条</string>
+    <string name="favorites_empty">还没有收藏。收到的纸条点收藏就会出现在这里。</string>
+    <string name="action_favorite">收藏</string>
+    <string name="action_favorited">已收藏</string>
+    <string name="favorited_toast">已收藏这张纸条</string>
+    <string name="unfavorited_toast">已取消收藏</string>
+    <string name="action_view_favorites">收藏夹</string>
+    <string name="action_view_inbox">收件箱</string>
+    <string name="inbox_title">收到的纸条</string>
+    <string name="inbox_empty">还没有收到纸条。对方发出后就会出现在这里。</string>
+    <string name="only_doodle_preview">（一张手写纸条）</string>
+    <string name="note_meta">%1$s 写于 %2$s</string>
+    <string name="note_gone">这张纸条已经不在了</string>
+    <string name="delete_fav_confirm">取消收藏并删除？删除后无法恢复。</string>
+    <string name="action_delete">删除</string>
+    <string name="deleted_toast">已删除</string>
+    <string name="favorite_meta">%1$s · %2$s</string>
+    <string name="delete_confirm">删除后无法恢复，确定吗？</string>
+    <string name="already_favorited">这张已经在收藏夹里了</string>
+
+    <!-- 首页状态 -->
+    <string name="only_doodle">（只有涂鸦）</string>
+    <string name="conn_unregistered">未注册身份。先到「连接设置」注册并配对。</string>
+    <string name="conn_no_peer">已注册，但还没有配对的人。</string>
+    <string name="conn_ready">已连接为「%1$s」，可以收发纸条了。</string>
+    <string name="conn_starting">正在建立长连接…</string>
+    <string name="conn_reconnecting">正在重新连接…</string>
+    <string name="counts">收件箱 %1$d 张 · 收藏 %2$d 张</string>
+    <string name="action_start_service">重新连接</string>
+    <string name="action_settings">连接设置</string>
+
+    <!-- 设置页 -->
+    <string name="settings_title">连接设置</string>
+    <string name="label_server">服务器</string>
+    <string name="hint_server">https://example.com/notedrop</string>
+    <string name="hint_nickname">你的昵称</string>
+    <string name="action_save_server">保存地址</string>
+    <string name="action_register">注册身份</string>
+    <string name="label_account">账号</string>
+    <string name="hint_username">用户名（登录用，不可改）</string>
+    <string name="hint_password">密码（至少 6 位）</string>
+    <string name="hint_new_nickname">新昵称</string>
+    <string name="action_login">登录</string>
+    <string name="action_change_nickname">改昵称</string>
+    <string name="login_ok">已登录为「%1$s」</string>
+    <string name="register_ok">注册成功，账号「%1$s」</string>
+    <string name="nickname_changed">昵称已改为「%1$s」</string>
+    <string name="err_need_username">请填写用户名和密码</string>
+    <string name="identity_logged_in">已登录：%1$s\n账号：%2$s\nID：%3$s</string>
+    <string name="label_pair">配对</string>
+    <string name="hint_code">4~6 位数字邀请码</string>
+    <string name="action_create_code">生成邀请码</string>
+    <string name="action_join_code">用码配对</string>
+    <string name="pair_tip">两种方式：① 点「生成邀请码」把数字发给对方，让 TA 输入后点「用码配对」。② 双方自己约定同一个数字填进去，各点一次「生成邀请码」，先建码的人再把码交给对方配对。</string>
+    <string name="label_peers">我的同伴（点击选择发送对象）</string>
+    <string name="identity_registered">身份：%1$s\nID：%2$s</string>
+    <string name="identity_none">尚未注册身份。填好服务器地址和昵称后点「注册身份」。</string>
+    <string name="server_saved">服务器地址已保存</string>
+    <string name="err_bad_server">地址要以 http:// 或 https:// 开头</string>
+    <string name="err_need_register">请先注册身份</string>
+    <string name="err_need_code">请先填写邀请码</string>
+    <string name="err_unknown">出错了，请重试</string>
+    <string name="working">处理中…</string>
+    <string name="code_ready">邀请码：%1$s（15 分钟内有效）</string>
+    <string name="paired_ok">已和「%1$s」配对了</string>
+    <string name="no_peers">还没有同伴，用邀请码配对吧。</string>
+    <string name="peer_count">共 %1$d 个同伴</string>
+    <string name="peer_selected">已把「%1$s」设为发送对象</string>
+
+    <!-- 群组 -->
+    <string name="label_groups">群组</string>
+    <string name="hint_group_name">群组名称（创建时填）</string>
+    <string name="group_tip">创建群组会生成一个 6 位邀请码，把它发给朋友，朋友用「加入群组」输入即可。进群后就能玩接力传纸条和随机匿名传纸条。</string>
+    <string name="action_create_group">创建群组</string>
+    <string name="action_join_group">加入群组</string>
+    <string name="group_created">群组已创建，邀请码：%1$s</string>
+    <string name="group_joined">已加入群组「%1$s」</string>
+    <string name="group_code_ready">群「%1$s」邀请码：%2$s（发给朋友即可加入）</string>
+    <string name="no_groups">还没有加入任何群组。</string>
+    <string name="group_count">已加入 %1$d 个群组</string>
+    <string name="group_members">%1$s · %2$d 人</string>
+    <string name="group_code_only">邀请码 %1$s</string>
+    <string name="list_row_meta">%1$s · %2$s</string>
+    <string name="section_current">当前纸条</string>
+    <string name="list_count">%1$d 张</string>
+    <string name="chip_from">来自 %1$s</string>
+
+    <!-- ===== 首页 ===== -->
+
+    <!--
+      四个快捷入口。文案刻意短 —— 参考图里图标下面就是两三个字，
+      长了会挤成两行，破坏那一排的整齐。
+    -->
+    <string name="quick_compose">写纸条</string>
+    <string name="quick_inbox">收件箱</string>
+    <string name="quick_favorites">收藏夹</string>
+    <string name="quick_settings">设置</string>
+
+    <!-- 首页一条纸条都没有时 -->
+    <string name="home_empty">还没有纸条。\n点「写纸条」给自己留一张，\n或者和朋友配对后互相传。</string>
+
+    <string name="action_back">返回</string>
+
+    <!-- ===== 抠图页 ===== -->
+
+    <string name="cutout_title">抠贴纸</string>
+    <string name="cutout_done">完成</string>
+    <string name="cutout_hint">点一下要去掉的背景。相同颜色的连片区域会一起消失。</string>
+    <string name="cutout_running">正在处理…</string>
+    <string name="cutout_tolerance">容差</string>
+    <string name="cutout_undo">撤销</string>
+    <string name="cutout_auto">自动去四角</string>
+    <string name="cutout_reset">还原</string>
+    <string name="cutout_nothing">这里没有可以去掉的连片颜色</string>
+    <string name="cutout_undone">已撤销</string>
+    <string name="cutout_no_undo">没有可撤销的步骤</string>
+    <string name="cutout_empty">还没有抠掉任何东西。点一下要去掉的背景再完成。</string>
+    <string name="cutout_failed">图片读取失败，换一张试试</string>
+
+    <!-- 贴纸锁定 -->
+    <string name="sticker_lock">锁定位置</string>
+    <string name="sticker_unlock">解锁</string>
+    <string name="sticker_locked">已锁定，可以从上面直接画了</string>
+    <string name="sticker_unlocked">已解锁，可以拖动调整</string>
+
+    <!-- 发送结果 -->
+    <string name="sent_remote">已发出，对方桌面马上就会出现</string>
+    <string name="sent_local_only">没发出去（%1$s），已先贴在自己桌面上</string>
+    <string name="sent_local">已贴到自己桌面（还没有配对的人）</string>
+    <string name="sent_failed_kept">发送失败（%1$s）\n已保存在自己桌面，可在收藏夹找到</string>
+
+    <!-- 前台通知 -->
+    <string name="channel_connection">实时接收</string>
+    <string name="channel_note">新纸条提醒</string>
+    <string name="notify_title">小纸条正在接收</string>
+    <string name="notify_text">保持连接，朋友发来的纸条会直接出现在桌面</string>
+</resources>

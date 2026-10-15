@@ -1,11 +1,11 @@
-﻿/**
+/**
  * 网页端 UI 冒烟测试。
  *
  * 用无头 Chrome 真实加载页面、点按钮、发纸条，
  * 验证的不只是接口，而是"用户真的能用"。
  *
  * 用法：
- *   node test/web-ui-test.mjs https://example.com/notedrop/
+ *   node test/web-ui-test.mjs https://example.com/SlipNote/
  *   node test/web-ui-test.mjs http://127.0.0.1:8090/
  */
 
@@ -68,7 +68,7 @@ async function registerAs(page, nickname) {
   // 双保险：即使目录被复用，也强制清掉旧身份，从注册页开始
   await page.evaluate(() => {
     try {
-      localStorage.removeItem('notedrop.web.identity')
+      localStorage.removeItem('SlipNote.web.identity')
     } catch {}
   })
   await page.reload({ waitUntil: 'networkidle2' })

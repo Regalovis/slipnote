@@ -35,7 +35,7 @@ object AppConfig {
      * 也可以不改代码：App 的「连接设置」页里能手动填服务器地址，
      * 填过的值会存进本地配置并优先生效。
      */
-    const val DEFAULT_SERVER = "https://example.com/notedrop"
+    const val DEFAULT_SERVER = "https://example.com/slipnote"
 
     private fun prefs(context: Context): SharedPreferences =
         context.applicationContext.getSharedPreferences(PREF, Context.MODE_PRIVATE)

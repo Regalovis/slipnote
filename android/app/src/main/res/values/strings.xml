@@ -121,7 +121,7 @@
     <!-- 设置页 -->
     <string name="settings_title">连接设置</string>
     <string name="label_server">服务器</string>
-    <string name="hint_server">https://example.com/notedrop</string>
+    <string name="hint_server">https://example.com/slipnote</string>
     <string name="hint_nickname">你的昵称</string>
     <string name="action_save_server">保存地址</string>
     <string name="action_register">注册身份</string>

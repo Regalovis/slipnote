@@ -12,12 +12,12 @@
   'use strict'
 
   /**
-   * 页面挂在 nginx 的子路径 /notedrop/ 下（不是站点根目录），
+   * 页面挂在 nginx 的子路径 /slipnote/ 下（不是站点根目录），
    * 所以 api 和 ws 的地址都要带上这个前缀。
    *
    * 从 pathname 推导而不是写死，这样本地直连 8090 根路径也能用。
    * 只剥掉末尾的 "/" 或 "/index.html"，不剥目录名 ——
-   * 否则访问 /notedrop（不带斜杠）时会把整个前缀也吃掉。
+   * 否则访问 /slipnote（不带斜杠）时会把整个前缀也吃掉。
    */
   const API = location.pathname.replace(/\/(index\.html)?$/, '')
 
@@ -108,7 +108,7 @@
 
   // ---------- 身份 ----------
 
-  const LS_KEY = 'notedrop.web.identity'
+  const LS_KEY = 'slipnote.web.identity'
 
   function loadIdentity() {
     try {
@@ -376,7 +376,7 @@
 
   // ---------- 收藏 ----------
 
-  const FAV_KEY = 'notedrop.web.favorites'
+  const FAV_KEY = 'slipnote.web.favorites'
 
   function loadFavorites() {
     try {

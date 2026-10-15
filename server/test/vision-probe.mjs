@@ -11,7 +11,7 @@
  *   OPENAI_BASE   接口地址（默认官方地址）
  *   OPENAI_MODEL  模型名
  *
- * 这个脚本和 NoteDrop 本身无关，是开发期用来排查
+ * 这个脚本和 SlipNote 本身无关，是开发期用来排查
  * "模型到底能不能看图"的小工具，留在这里供参考。
  */
 import fs from 'node:fs'

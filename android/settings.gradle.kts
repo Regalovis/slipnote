@@ -14,5 +14,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "NoteDrop"
+rootProject.name = "SlipNote"
 include(":app")

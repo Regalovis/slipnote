@@ -1,4 +1,4 @@
-﻿'use strict'
+'use strict'
 
 /**
  * 端到端联调脚本。
@@ -8,7 +8,7 @@
  *
  * 用法：
  *   BASE=http://127.0.0.1:8090 node test/e2e.js              # 直连后端
- *   BASE=https://example.com/notedrop node test/e2e.js          # 走 nginx（推荐）
+ *   BASE=https://example.com/SlipNote node test/e2e.js          # 走 nginx（推荐）
  *
  * 注意 WebSocket 的监听必须在连接建立**之前**注册。
  * 服务端连上后会立刻下发 ready，如果等 open 之后才挂 listener，

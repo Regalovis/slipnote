@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # 查看生产库里的用户与纸条记录，用于定位"发不出 / 收不到"的问题
 set -u
-cd /srv/notedrop || exit 1
+cd /srv/slipnote || exit 1
 
 node -e "
 const { db } = require('./src/db');

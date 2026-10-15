@@ -132,7 +132,7 @@ class NoteWidgetProvider : AppWidgetProvider() {
             }
         }
 
-        private const val TAG = "NoteDrop"
+        private const val TAG = "SlipNote"
 
         private fun renderEmpty(views: RemoteViews) {
             views.setTextViewText(R.id.widget_text, "还没有纸条\n点一下，写点什么")

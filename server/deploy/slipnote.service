@@ -1,17 +1,17 @@
 [Unit]
-Description=NoteDrop server (node, 127.0.0.1:8090)
-Documentation=file:///srv/notedrop/README.md
+Description=SlipNote server (node, 127.0.0.1:8090)
+Documentation=file:///srv/slipnote/README.md
 After=network.target
 
 [Service]
 Type=simple
 User=sysadmin
 Group=sysadmin
-WorkingDirectory=/srv/notedrop
+WorkingDirectory=/srv/slipnote
 Environment=NODE_ENV=production
 Environment=PORT=8090
 Environment=HOST=127.0.0.1
-Environment=DATA_DIR=/srv/notedrop/data
+Environment=DATA_DIR=/srv/slipnote/data
 ExecStart=/usr/bin/node src/index.js
 Restart=always
 RestartSec=3
@@ -23,7 +23,7 @@ NoNewPrivileges=true
 # 日志进 journald
 StandardOutput=journal
 StandardError=journal
-SyslogIdentifier=notedrop
+SyslogIdentifier=slipnote
 
 [Install]
 WantedBy=multi-user.target

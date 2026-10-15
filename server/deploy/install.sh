@@ -7,9 +7,9 @@ BACKUP_DIR=/etc/nginx/sites-available
 STAMP=$(date +%Y%m%d-%H%M%S)
 
 echo "==== 1. 安装 systemd 服务 ===="
-sudo cp /tmp/notedrop-deploy/deploy/notedrop.service /etc/systemd/system/notedrop.service
+sudo cp /tmp/slipnote-deploy/deploy/slipnote.service /etc/systemd/system/slipnote.service
 sudo systemctl daemon-reload
-sudo systemctl enable notedrop
+sudo systemctl enable slipnote
 echo "服务已注册"
 
 echo "==== 2. 接入 nginx（先备份）===="
@@ -18,7 +18,7 @@ echo "已备份为 rks.backup-$STAMP"
 
 # 把 snippet 文件放到 nginx 可 include 的位置
 sudo mkdir -p /etc/nginx/snippets
-sudo cp /tmp/notedrop-deploy/deploy/nginx-notedrop.conf /etc/nginx/snippets/notedrop.conf
+sudo cp /tmp/slipnote-deploy/deploy/nginx-slipnote.conf /etc/nginx/snippets/slipnote.conf
 
 # 在 rks 站点的 443 server 块里插入 include。
 # 用 python 精确插入到最后一个 } 之前，避免破坏原有配置结构。
@@ -30,7 +30,7 @@ path = sys.argv[1]
 with open(path, encoding='utf-8') as f:
     src = f.read()
 
-if '/etc/nginx/snippets/notedrop.conf' in src:
+if '/etc/nginx/snippets/slipnote.conf' in src:
     print('nginx 配置里已存在 include，跳过')
     sys.exit(0)
 
@@ -40,8 +40,8 @@ if first < 0:
     raise SystemExit('找不到 server 块')
 
 snippet = (
-    '\n    # ---- NoteDrop 小纸条服务（由 install.sh 添加）----\n'
-    '    include /etc/nginx/snippets/notedrop.conf;\n'
+    '\n    # ---- SlipNote 服务（由 install.sh 添加）----\n'
+    '    include /etc/nginx/snippets/slipnote.conf;\n'
 )
 
 # 从第一个 server 块开始找到与它配对的右花括号
@@ -64,19 +64,19 @@ if end is None:
 out = src[:end] + snippet + src[end:]
 with open(path, 'w', encoding='utf-8') as f:
     f.write(out)
-print('已在 443 server 块内插入 NoteDrop 反代配置')
+print('已在 443 server 块内插入 SlipNote 反代配置')
 PYEOF
 
 echo "==== 3. 校验 nginx 配置 ===="
 sudo nginx -t
 
 echo "==== 4. 启动服务 ===="
-sudo systemctl restart notedrop
+sudo systemctl restart slipnote
 sleep 2
 sudo systemctl reload nginx
 
 echo "==== 5. 状态确认 ===="
-systemctl is-active notedrop && echo "notedrop: active"
+systemctl is-active slipnote && echo "slipnote: active"
 sudo ss -tlnp | grep 8090 || echo "警告：8090 未监听"
 echo "本机直连测试："
 curl -s --max-time 10 http://127.0.0.1:8090/api/health || echo "健康检查失败"

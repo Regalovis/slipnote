@@ -1,6 +1,6 @@
-﻿/**
+/**
  * 排查画板导出问题：确认画布尺寸、绘制、导出是否都正常。
- * 用法：node test/debug-pad.mjs https://example.com/notedrop/
+ * 用法：node test/debug-pad.mjs https://example.com/SlipNote/
  */
 import puppeteer from 'puppeteer-core'
 

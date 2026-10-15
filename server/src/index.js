@@ -804,7 +804,7 @@ const sweep = setInterval(() => {
 sweep.unref?.()
 
 server.listen(PORT, HOST, () => {
-  console.log(`[notedrop] listening on http://${HOST}:${PORT}`)
+    console.log(`[slipnote] listening on http://${HOST}:${PORT}`)
 })
 
 function shutdown() {

@@ -1,4 +1,4 @@
-﻿// 验证 ACK 机制：多条离线纸条都要能拉到，且 ACK 之后不再重复
+// 验证 ACK 机制：多条离线纸条都要能拉到，且 ACK 之后不再重复
 import WebSocket from 'ws'
 const BASE = process.env.BASE || 'http://127.0.0.1:8099'
 const WS_BASE = BASE.replace(/^http/, 'ws')

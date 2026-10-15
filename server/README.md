@@ -24,7 +24,7 @@ npm start
 默认监听 `0.0.0.0:8080`，可用环境变量覆盖：
 
 ```bash
-PORT=9000 DATA_DIR=/var/lib/notedrop npm start
+PORT=9000 DATA_DIR=/var/lib/slipnote npm start
 ```
 
 ## 接口
@@ -118,7 +118,7 @@ ws://<host>:8080/ws?token=<token>
 
 ## 数据存储
 
-SQLite 文件默认在 `./data/notedrop.db`。
+SQLite 文件默认在 `./data/slipnote.db`。
 
 表结构：
 
@@ -132,7 +132,7 @@ SQLite 文件默认在 `./data/notedrop.db`。
 ```bash
 # 用 pm2 常驻
 npm i -g pm2
-pm2 start src/index.js --name notedrop
+pm2 start src/index.js --name slipnote
 pm2 save
 ```
 

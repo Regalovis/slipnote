@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # 检查生产库的迁移状态与字段是否齐全
 set -u
-cd /srv/notedrop || exit 1
+cd /srv/slipnote || exit 1
 
 echo "=== notes 表字段 ==="
 node -e "

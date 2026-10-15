@@ -4,25 +4,25 @@
 set -e
 
 echo "==== 1. 拷贝文件 ===="
-sudo cp /tmp/db.js /tmp/index.js /srv/notedrop/src/
-sudo cp /tmp/auth.js /tmp/groups.js /srv/notedrop/test/ 2>/dev/null || true
-sudo chown -R sysadmin:sysadmin /srv/notedrop
+sudo cp /tmp/db.js /tmp/index.js /srv/slipnote/src/
+sudo cp /tmp/auth.js /tmp/groups.js /srv/slipnote/test/ 2>/dev/null || true
+sudo chown -R sysadmin:sysadmin /srv/slipnote
 echo "done"
 
 echo "==== 2. 重启服务 ===="
-sudo systemctl restart notedrop
+sudo systemctl restart slipnote
 sleep 3
-echo "status: $(systemctl is-active notedrop)"
+echo "status: $(systemctl is-active slipnote)"
 
 echo "==== 3. 数据库迁移日志 ===="
-sudo journalctl -u notedrop -n 40 --no-pager | grep -i "migration" | tail -8 || echo "(无新迁移)"
+sudo journalctl -u slipnote -n 40 --no-pager | grep -i "migration" | tail -8 || echo "(无新迁移)"
 
 echo "==== 4. 健康检查 ===="
 curl -s --max-time 8 http://127.0.0.1:8090/api/health
 echo
 
 echo "==== 5. 账号系统测试 ===="
-cd /srv/notedrop
+cd /srv/slipnote
 BASE=http://127.0.0.1:8090 node test/auth.js 2>&1 | grep -v Experimental | grep -v trace-warnings | tail -22
 
 echo

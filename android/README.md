@@ -1,18 +1,6 @@
-# 小纸条 Demo（NoteDrop）
+# 小纸条 Android 端
 
-一个可编译、可安装的 Android 小部件 Demo，验证「写纸条 → 桌面立刻出现」这条核心链路。
-
-## 现在能做什么
-
-1. 打开 App，点「写一张小纸条」
-2. 可以打字，也可以直接在下方用手写/涂鸦
-3. 点「发送」
-4. 返回桌面，长按空白处 → 添加小部件 → 找到「小纸条」
-5. 桌面上就会出现这张纸条，可拖动调整大小
-6. 再点桌面上的纸条，会重新进入编辑页
-
-**关键验证点**：从点「发送」到桌面小部件刷新，走的是**主动刷新**通道，
-不等系统那 30 分钟的定时器。
+安卓 App 和桌面小部件。写纸条、涂鸦、贴贴纸，发出去之后对方桌面就会更新。
 
 ## 环境
 
@@ -32,9 +20,9 @@ cd android
 ./gradlew assembleDebug
 ```
 
-第一次跑需要本机有 Gradle 8.9+；也可以直接用 Android Studio 打开这个目录。
+也可以用 Android Studio 直接打开这个目录。
 
-产物：`app/build/outputs/apk/debug/app-debug.apk`
+产物在 `app/build/outputs/apk/debug/app-debug.apk`。
 
 安装：
 
@@ -42,72 +30,85 @@ cd android
 adb install -r app/build/outputs/apk/debug/app-debug.apk
 ```
 
+**装之前先改服务器地址**：`app/src/main/java/com/notedrop/demo/net/AppConfig.kt`
+里的 `DEFAULT_SERVER`。也可以装完在 App 的「连接设置」里填，填过的会存本地并优先生效。
+
 ## 代码结构
 
 ```
 app/src/main/java/com/notedrop/demo/
-├── data/
-│   ├── Note.kt              纸条数据模型
-│   └── NoteStore.kt         本地存储（SharedPreferences + 涂鸦文件）
-├── ui/
-│   ├── MainActivity.kt      首页，显示当前纸条状态
-│   ├── ComposeActivity.kt   写纸条页：打字 + 涂鸦 + 发送
-│   └── DoodleView.kt        手写画板（中点贝塞尔平滑）
+├── data/        数据模型与本地存储
+│   ├── Note.kt              纸条模型
+│   ├── NoteStore.kt         桌面当前显示的那张
+│   ├── InboxStore.kt        收件箱存档
+│   ├── Favorite.kt          收藏夹
+│   └── NoteComposer.kt      手写 + 贴纸合成一张图
+├── net/         网络
+│   ├── Api.kt               HTTP 接口
+│   ├── AppConfig.kt         账号与服务器地址
+│   └── NoteSocketService.kt WebSocket 长连接 + 兜底轮询
+├── sticker/     贴纸
+│   ├── MagicWand.kt         颜色键抠图
+│   ├── CutoutView.kt        抠图画布（带棋盘格）
+│   └── StickerStore.kt      贴纸库
+├── ui/          界面
+│   ├── MainActivity.kt      首页
+│   ├── ComposeActivity.kt   写纸条页
+│   ├── CutoutActivity.kt    抠图页
+│   ├── NoteListActivity.kt  收件箱 / 收藏夹
+│   ├── NoteDetailActivity.kt 纸条详情
+│   ├── DoodleView.kt        手写画板
+│   └── NoteRenderView.kt    只读渲染（能画贴纸、能点中）
 └── widget/
-    └── NoteWidgetProvider.kt  桌面小部件 + 主动刷新入口
+    └── NoteWidgetProvider.kt  桌面小部件
 ```
 
-## 两个关键实现点
+## 三个关键实现
 
-### 1. 主动刷新（产品的技术核心）
+### 1. 桌面刷新不等系统定时器
 
-`NoteWidgetProvider.refresh(context)` 是所有"立刻更新桌面"的唯一入口。
-任何地方调用它，都会重新组装 RemoteViews 并推送给桌面：
+`NoteWidgetProvider.refresh(context)` 是"立刻更新桌面"的唯一入口。
+任何地方调用它，都会重新组装 RemoteViews 推给桌面：
 
 ```kotlin
-// 在发送后调用
 NoteWidgetProvider.refresh(this)
 ```
 
-接推送时，只要在收到消息的回调里调这一句，就能做到"对方一发，我桌面就变"。
-这条链路**不受 `updatePeriodMillis` 30 分钟下限的约束**，
-那个 30 分钟只是系统兜底唤醒的间隔。
+收到消息后调这一句，就能做到「对方一发，我桌面就变」。
+这条链路不受 `updatePeriodMillis` 那 30 分钟下限约束 —— 那个只是系统兜底唤醒。
 
-### 2. 涂鸦为什么要存成图片
+### 2. 手写和贴纸要合成成一张图
 
-手写内容没有对应的 RemoteViews 控件，所以 `DoodleView` 导出成 PNG 存本地，
-小部件里用 `ImageView` 显示。读取时按小部件实际宽度做采样
-（`NoteStore.decodeDoodle`），避免大图进 RemoteViews 造成 transaction 超限
-——这是小部件里最容易踩的坑之一。
+RemoteViews 里只有一个 ImageView，没法叠图层；而贴纸在数据上又是独立的一份
+（为了能让接收方单独取下来）。
 
-## 尚未包含（Demo 的边界）
+所以给小部件出图前先合一次。只影响显示，不影响存档里的贴纸数据。
 
-这个 Demo 只解决"从本机写、到本机桌面显示"，以下都还没做：
+### 3. 画布尺寸是固定的
 
-* 账号、配对、多用户
-* 服务端、网络请求
-* 推送（FCM / 小米 / 华为 / OPPO / vivo）
-* 纸条历史列表
-* 点击小部件"展开放大"的动效（目前是跳编辑页）
-* 手写字体已打包进 `assets/LongCang-Regular.ttf`（龙藏体，OFL 授权），但还没接到 UI 上
+编辑页的工具栏是可收起的抽屉，展开时画布区会变矮。
+如果画布跟着控件高度走，会出现两个问题：导出时按变矮后的高度出图，
+下面的内容被裁掉；贴纸存的是相对坐标，高度一变位置就漂。
 
-## 各厂商适配现状
+所以画布在第一次布局时定死尺寸，界面只是看它的窗口。
 
-小部件本身是标准 Android AppWidget，**随 App 安装即可使用，不需要任何厂商审核**。
+## 小部件适配
 
-已按小米规范预埋的项：
+小部件是标准 AppWidget，**随 App 安装就能用，不需要任何厂商审核**。
 
-* `miuiWidget` / `miuiWidgetRefresh=exposure` / `miuiWidgetRefreshMinInterval` 元数据
-* `miuiWidgetVersion=1`（应用内所有小部件共用，有变更时必须递增）
+已按小米规范预埋：
 
-未做的项（不影响使用，但影响进小米小部件中心）：
+- `miuiWidget` / `miuiWidgetRefresh=exposure` / `miuiWidgetRefreshMinInterval`
+- `miuiWidgetVersion=1`（应用内所有小部件共用，有变更时必须递增）
 
-* 独立进程 `:widgetProvider` 与 35M 内存约束
-* 根布局 `@android:id/background` 的圆角标识
-* 预览图目前是矢量占位图，正式提交需要按 440×440 / 948×440 / 948×1000 出图
+还没做的（不影响使用，只影响进小米小部件中心）：
+
+- 独立进程 `:widgetProvider` 与 35M 内存约束
+- 根布局 `@android:id/background` 的圆角标识
+- 预览图目前是矢量占位，正式提交要按 440×440 / 948×440 / 948×1000 出图
 
 ## 已知边界
 
-* 用户手动"强行停止"App 后，任何应用都无法拉起刷新，这是 Android 平台限制。
-* 多个小部件共用同一份数据；"每个配对各自一张纸条"需要等接入多用户后再做。
-* 桌面上的纸条整块都是一个点击热区，目前没有区分"查看"和"写"两个动作。
+- 用户手动「强行停止」App 后，任何应用都无法拉起刷新，这是 Android 平台限制。
+- 只在小米上实测过，华为 / OPPO / vivo / 鸿蒙没逐个验证。
+- 多次发送时，桌面小部件只显示最新那张，历史在收件箱里。

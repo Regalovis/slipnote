@@ -1,5 +1,5 @@
 {
-  "name": "notedrop-server",
+  "name": "slipnote-server",
   "version": "0.1.0",
   "private": true,
   "description": "小纸条服务端：配对、纸条中转、WebSocket 实时推送",

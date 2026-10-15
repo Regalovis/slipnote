@@ -31,7 +31,7 @@ object NoteStore {
     private const val KEY_STICKERS = "note_stickers"
     private const val DOODLE_FILE = "doodle_latest.png"
 
-    private const val TAG = "NoteDrop"
+    private const val TAG = "SlipNote"
 
     /**
      * 小部件单次更新的位图内存上限。

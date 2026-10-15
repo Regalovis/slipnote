@@ -2,7 +2,7 @@
 # 部署后的冒烟测试：确认依赖、数据库驱动、服务启动都正常
 set -u
 
-cd /srv/notedrop || exit 1
+cd /srv/slipnote || exit 1
 
 echo "=== 依赖检查 ==="
 ls node_modules | head -5

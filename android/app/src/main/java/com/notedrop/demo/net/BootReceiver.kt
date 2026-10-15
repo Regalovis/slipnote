@@ -35,6 +35,6 @@ class BootReceiver : BroadcastReceiver() {
     }
 
     private companion object {
-        const val TAG = "NoteDrop"
+        const val TAG = "SlipNote"
     }
 }

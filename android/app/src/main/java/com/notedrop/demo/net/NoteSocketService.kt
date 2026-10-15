@@ -495,7 +495,7 @@ class NoteSocketService : Service() {
     }
 
     companion object {
-        private const val TAG = "NoteDrop"
+        private const val TAG = "SlipNote"
         private const val NOTIFICATION_NOTE_ID = 2001
 
         /** 收到贴纸解码后的最长边上限。贴纸是点缀，不需要原图分辨率。 */
